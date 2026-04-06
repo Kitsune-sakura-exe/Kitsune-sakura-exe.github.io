@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kitsune Sakura.exe — Tecnología con alma. Videojuegos, consultoría tech y soluciones digitales para pymes, despachos y detectives en México." />
+  <meta name="keywords" content="desarrollo videojuegos México, consultoría tech CDMX, sitios web pymes, despacho legal software" />
+  <meta property="og:title" content="Kitsune Sakura.exe — Technology with a Soul" />
+  <meta property="og:description" content="Videojuegos, consultoría tech y soluciones digitales. Con causa: 1% para los gatitos." />
+  <meta property="og:type" content="website" />
+  <title>Kitsune Sakura.exe — Technology with a Soul</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">
+      Kitsune Sakura<span>.exe</span>
+    </a>
+    <div class="nav-center">
+      <a href="#servicios" class="nav-link" data-es="servicios" data-en="services">servicios</a>
+      <a href="#portafolio" class="nav-link" data-es="portafolio" data-en="portfolio">portafolio</a>
+      <a href="#nosotros" class="nav-link" data-es="nosotros" data-en="about">nosotros</a>
+      <a href="#gatitos" class="nav-link" data-es="gatitos" data-en="cats">gatitos</a>
+      <a href="#contacto" class="nav-link" data-es="contacto" data-en="contact">contacto</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+        <span class="lang-sep">·</span>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── MOBILE MENU ── -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#servicios" class="mobile-link" data-es="Servicios" data-en="Services">Servicios</a>
+    <a href="#portafolio" class="mobile-link" data-es="Portafolio" data-en="Portfolio">Portafolio</a>
+    <a href="#nosotros" class="mobile-link" data-es="Nosotros" data-en="About">Nosotros</a>
+    <a href="#gatitos" class="mobile-link" data-es="Gatitos" data-en="Cats">Gatitos</a>
+    <a href="#contacto" class="mobile-link" data-es="Contacto" data-en="Contact">Contacto</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="inicio">
+    <div class="hero-deco">
+      <div class="petal p1"></div>
+      <div class="petal p2"></div>
+      <div class="petal p3"></div>
+      <div class="petal p4"></div>
+      <div class="petal p5"></div>
+    </div>
+    <div class="hero-content reveal">
+      <p class="hero-tag" data-es="// tecnología con alma" data-en="// technology with a soul">// tecnología con alma</p>
+      <h1 class="hero-title">
+        <span class="line1" data-es="Construimos" data-en="We build">Construimos</span>
+        <span class="line2" data-es="mundos digitales." data-en="digital worlds.">mundos <em>digitales.</em></span>
+      </h1>
+      <p class="hero-sub" data-es="Videojuegos indie, consultoría tech y soluciones digitales para pymes, despachos legales y detectives. Cada proyecto lleva propósito." data-en="Indie video games, tech consulting and digital solutions for SMEs, law firms and investigators. Every project carries purpose.">
+        Videojuegos indie, consultoría tech y soluciones digitales para pymes, despachos legales y detectives. Cada proyecto lleva propósito.
+      </p>
+      <div class="hero-ctas">
+        <a href="#servicios" class="btn-primary" data-es="Ver servicios" data-en="See services">Ver servicios</a>
+        <a href="#contacto" class="btn-ghost" data-es="Hablemos →" data-en="Let's talk →">Hablemos →</a>
+      </div>
+    </div>
+    <div class="hero-badge reveal">
+      <span class="badge-inner">
+        <span class="badge-num">1%</span>
+        <span class="badge-text" data-es="para los gatitos" data-en="for the cats">para los gatitos</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ── SERVICIOS ── -->
+  <section class="section" id="servicios">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="section-tag" data-es="02 · servicios" data-en="02 · services">02 · servicios</p>
+        <h2 class="section-title" data-es="Lo que hacemos" data-en="What we do">Lo que hacemos</h2>
+        <p class="section-sub" data-es="Tres pilares, una empresa con causa." data-en="Three pillars, one company with purpose.">Tres pilares, una empresa con causa.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="svc-card reveal" style="--delay:0.1s">
+          <div class="svc-icon svc-red">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="13" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M8 10l3 3-3 3M13 16h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="svc-name" data-es="Videojuegos" data-en="Video games">Videojuegos</h3>
+          <p class="svc-desc" data-es="Desarrollo indie para móvil y PC. Gamificación para empresas. Consultoría a estudios en crecimiento." data-en="Indie development for mobile and PC. Gamification for businesses. Consulting for growing studios.">Desarrollo indie para móvil y PC. Gamificación para empresas. Consultoría a estudios en crecimiento.</p>
+          <div class="svc-price" data-es="Desde $15,000 MXN" data-en="From $15,000 MXN">Desde $15,000 MXN</div>
+        </div>
+
+        <div class="svc-card reveal featured" style="--delay:0.2s">
+          <div class="svc-badge" data-es="Más solicitado" data-en="Most requested">Más solicitado</div>
+          <div class="svc-icon svc-pink">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="svc-name" data-es="Consultoría tech" data-en="Tech consulting">Consultoría tech</h3>
+          <p class="svc-desc" data-es="Sistemas para despachos legales, detectives e investigadores. Automatización de procesos para pymes." data-en="Systems for law firms, detectives and investigators. Process automation for SMEs.">Sistemas para despachos legales, detectives e investigadores. Automatización de procesos para pymes.</p>
+          <div class="svc-price" data-es="Desde $8,000 MXN" data-en="From $8,000 MXN">Desde $8,000 MXN</div>
+        </div>
+
+        <div class="svc-card reveal" style="--delay:0.3s">
+          <div class="svc-icon svc-green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M7 8h10M7 12h7M7 16h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="svc-name" data-es="Presencia digital" data-en="Digital presence">Presencia digital</h3>
+          <p class="svc-desc" data-es="Sitios web profesionales, bilingües y rápidos. Mantenimiento mensual con soporte incluido." data-en="Professional, bilingual and fast websites. Monthly maintenance with support included.">Sitios web profesionales, bilingües y rápidos. Mantenimiento mensual con soporte incluido.</p>
+          <div class="svc-price" data-es="Desde $9,500 MXN" data-en="From $9,500 MXN">Desde $9,500 MXN</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PORTAFOLIO ── -->
+  <section class="section section-alt" id="portafolio">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="section-tag" data-es="03 · portafolio" data-en="03 · portfolio">03 · portafolio</p>
+        <h2 class="section-title" data-es="Proyectos" data-en="Projects">Proyectos</h2>
+        <p class="section-sub" data-es="Casos reales, resultados reales." data-en="Real cases, real results.">Casos reales, resultados reales.</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="port-card reveal" style="--delay:0.1s">
+          <div class="port-thumb port-game">
+            <div class="port-thumb-inner">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="4" y="10" width="32" height="20" rx="6" stroke="white" stroke-width="1.5" opacity="0.6"/><path d="M14 20h4M16 18v4M24 19h4M25 22h2" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="port-info">
+            <div class="port-tag" data-es="videojuego · mobile" data-en="video game · mobile">videojuego · mobile</div>
+            <h3 class="port-name" data-es="Juego indie #1" data-en="Indie game #1">Juego indie #1</h3>
+            <p class="port-desc" data-es="Próximamente — en desarrollo" data-en="Coming soon — in development">Próximamente — en desarrollo</p>
+          </div>
+        </div>
+        <div class="port-card reveal" style="--delay:0.2s">
+          <div class="port-thumb port-legal">
+            <div class="port-thumb-inner">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="8" y="6" width="24" height="28" rx="3" stroke="white" stroke-width="1.5" opacity="0.6"/><path d="M14 14h12M14 20h12M14 26h8" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+          <div class="port-info">
+            <div class="port-tag" data-es="consultoría · sistema" data-en="consulting · system">consultoría · sistema</div>
+            <h3 class="port-name" data-es="Sistema para despacho" data-en="Law firm system">Sistema para despacho</h3>
+            <p class="port-desc" data-es="Próximamente — en desarrollo" data-en="Coming soon — in development">Próximamente — en desarrollo</p>
+          </div>
+        </div>
+        <div class="port-card reveal" style="--delay:0.3s">
+          <div class="port-thumb port-web">
+            <div class="port-thumb-inner">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="4" y="8" width="32" height="24" rx="4" stroke="white" stroke-width="1.5" opacity="0.6"/><path d="M4 14h32" stroke="white" stroke-width="1.5" opacity="0.4"/><circle cx="10" cy="11" r="1.5" fill="white" opacity="0.6"/><circle cx="16" cy="11" r="1.5" fill="white" opacity="0.4"/></svg>
+            </div>
+          </div>
+          <div class="port-info">
+            <div class="port-tag" data-es="web · pyme" data-en="web · SME">web · pyme</div>
+            <h3 class="port-name" data-es="Sitio para negocio local" data-en="Local business website">Sitio para negocio local</h3>
+            <p class="port-desc" data-es="Próximamente — en desarrollo" data-en="Coming soon — in development">Próximamente — en desarrollo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NOSOTROS ── -->
+  <section class="section" id="nosotros">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="section-tag" data-es="04 · nosotros" data-en="04 · about">04 · nosotros</p>
+        <h2 class="section-title" data-es="Quiénes somos" data-en="Who we are">Quiénes somos</h2>
+      </div>
+      <div class="about-layout">
+        <div class="about-text reveal">
+          <p class="about-body" data-es="Somos Kitsune Sakura.exe, una empresa tech mexicana nacida en la Ciudad de México con una visión clara: crear tecnología que tenga alma, propósito y causa." data-en="We are Kitsune Sakura.exe, a Mexican tech company born in Mexico City with a clear vision: to create technology that has soul, purpose and cause.">
+            Somos Kitsune Sakura.exe, una empresa tech mexicana nacida en la Ciudad de México con una visión clara: crear tecnología que tenga alma, propósito y causa.
+          </p>
+          <p class="about-body" data-es="Combinamos el desarrollo de videojuegos, la consultoría tecnológica y la presencia digital bajo un mismo techo — y con cada proyecto que cerramos, el 1% va directo a apoyar a gatos en situación de calle." data-en="We combine video game development, technology consulting and digital presence under one roof — and with every project we close, 1% goes directly to support stray cats.">
+            Combinamos el desarrollo de videojuegos, la consultoría tecnológica y la presencia digital bajo un mismo techo — y con cada proyecto que cerramos, el 1% va directo a apoyar a gatos en situación de calle.
+          </p>
+          <div class="about-values">
+            <div class="value-pill" data-es="Creatividad" data-en="Creativity">Creatividad</div>
+            <div class="value-pill" data-es="Propósito" data-en="Purpose">Propósito</div>
+            <div class="value-pill" data-es="Calidad" data-en="Quality">Calidad</div>
+            <div class="value-pill" data-es="Causa" data-en="Cause">Causa</div>
+          </div>
+        </div>
+        <div class="about-stats reveal">
+          <div class="stat-card">
+            <span class="stat-num">3</span>
+            <span class="stat-label" data-es="Pilares de servicio" data-en="Service pillars">Pilares de servicio</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">1%</span>
+            <span class="stat-label" data-es="Para los gatitos" data-en="For the cats">Para los gatitos</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">MX</span>
+            <span class="stat-label" data-es="Hecho en México" data-en="Made in Mexico">Hecho en México</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num">2</span>
+            <span class="stat-label" data-es="Idiomas · ES & EN" data-en="Languages · ES & EN">Idiomas · ES & EN</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GATITOS ── -->
+  <section class="section section-cats" id="gatitos">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="section-tag" data-es="05 · causa social" data-en="05 · social cause">05 · causa social</p>
+        <h2 class="section-title cats-title" data-es="1% para los gatitos 🌸" data-en="1% for the cats 🌸">1% para los gatitos 🌸</h2>
+        <p class="section-sub" data-es="Porque la tecnología también puede tener corazón." data-en="Because technology can also have heart.">Porque la tecnología también puede tener corazón.</p>
+      </div>
+      <div class="cats-grid">
+        <div class="cat-card reveal" style="--delay:0.1s">
+          <div class="cat-icon">🐱</div>
+          <h3 class="cat-card-title" data-es="Cómo funciona" data-en="How it works">Cómo funciona</h3>
+          <p class="cat-card-desc" data-es="El 1% del valor de cada proyecto cerrado se dona directamente a refugios felinos y programas de atención veterinaria en México." data-en="1% of the value of every closed project is donated directly to cat shelters and veterinary care programs in Mexico.">El 1% del valor de cada proyecto cerrado se dona directamente a refugios felinos y programas de atención veterinaria en México.</p>
+        </div>
+        <div class="cat-card reveal" style="--delay:0.2s">
+          <div class="cat-icon">🏠</div>
+          <h3 class="cat-card-title" data-es="Refugios aliados" data-en="Partner shelters">Refugios aliados</h3>
+          <p class="cat-card-desc" data-es="Trabajamos con refugios locales de la CDMX para asegurarnos de que cada peso llegue directamente a quien lo necesita." data-en="We work with local CDMX shelters to make sure every peso reaches those who need it.">Trabajamos con refugios locales de la CDMX para asegurarnos de que cada peso llegue directamente a quien lo necesita.</p>
+        </div>
+        <div class="cat-card reveal" style="--delay:0.3s">
+          <div class="cat-icon">📋</div>
+          <h3 class="cat-card-title" data-es="Transparencia" data-en="Transparency">Transparencia</h3>
+          <p class="cat-card-desc" data-es="Publicamos un reporte anual de donaciones. Al contratar con nosotros, eres parte del impacto." data-en="We publish an annual donations report. When you hire us, you are part of the impact.">Publicamos un reporte anual de donaciones. Al contratar con nosotros, eres parte del impacto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACTO ── -->
+  <section class="section" id="contacto">
+    <div class="section-inner">
+      <div class="section-header reveal">
+        <p class="section-tag" data-es="06 · contacto" data-en="06 · contact">06 · contacto</p>
+        <h2 class="section-title" data-es="Hablemos" data-en="Let's talk">Hablemos</h2>
+        <p class="section-sub" data-es="¿Tienes un proyecto en mente? Cuéntanos." data-en="Got a project in mind? Tell us.">¿Tienes un proyecto en mente? Cuéntanos.</p>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info reveal">
+          <div class="contact-item">
+            <span class="contact-label">Email</span>
+            <a href="mailto:hola@kitsune-sakura.mx" class="contact-val">hola@kitsune-sakura.mx</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">WhatsApp</span>
+            <a href="https://wa.me/5255XXXXXXXX" class="contact-val">+52 55 XXXX XXXX</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">GitHub</span>
+            <a href="https://github.com/Kitsune-sakura-exe" target="_blank" class="contact-val">Kitsune-sakura-exe</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label" data-es="Ubicación" data-en="Location">Ubicación</span>
+            <span class="contact-val" data-es="Ciudad de México · Servicios remotos en toda la República" data-en="Mexico City · Remote services nationwide">Ciudad de México · Servicios remotos en toda la República</span>
+          </div>
+        </div>
+        <form class="contact-form reveal" id="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" data-es="Nombre" data-en="Name">Nombre</label>
+            <input type="text" class="form-input" id="f-name" required placeholder="Tu nombre" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="f-email" required placeholder="tu@email.com" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-es="Tipo de proyecto" data-en="Project type">Tipo de proyecto</label>
+            <select class="form-input" id="f-type">
+              <option value="" data-es="Selecciona una opción" data-en="Select an option">Selecciona una opción</option>
+              <option value="game" data-es="Videojuego" data-en="Video game">Videojuego</option>
+              <option value="consulting" data-es="Consultoría tech" data-en="Tech consulting">Consultoría tech</option>
+              <option value="web" data-es="Sitio web" data-en="Website">Sitio web</option>
+              <option value="other" data-es="Otro" data-en="Other">Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-es="Mensaje" data-en="Message">Mensaje</label>
+            <textarea class="form-input form-textarea" id="f-msg" required placeholder="Cuéntanos de tu proyecto..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary btn-full" id="submit-btn">
+            <span data-es="Enviar mensaje" data-en="Send message">Enviar mensaje</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:8px"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="form-success" id="form-success">
+            <span data-es="✿ Mensaje enviado — te contactamos pronto." data-en="✿ Message sent — we'll contact you soon.">✿ Mensaje enviado — te contactamos pronto.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-logo">Kitsune Sakura<span>.exe</span></span>
+        <span class="footer-tagline" data-es="Technology with a Soul" data-en="Technology with a Soul">Technology with a Soul</span>
+      </div>
+      <div class="footer-center">
+        <span class="footer-cause">🌸 <span data-es="1% para los gatitos en cada proyecto" data-en="1% for the cats in every project">1% para los gatitos en cada proyecto</span></span>
+      </div>
+      <div class="footer-right">
+        <span class="footer-copy">© 2025 Kitsune Sakura.exe S.A.S.</span>
+        <a href="https://github.com/Kitsune-sakura-exe" target="_blank" class="footer-link">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
