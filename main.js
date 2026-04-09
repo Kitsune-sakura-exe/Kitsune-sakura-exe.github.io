@@ -1,77 +1,22 @@
-// ── IDIOMA ──
-const translations = {
-  es: {
-    'page-title': 'Kitsune Sakura.exe — Technology with a Soul',
-    'meta-desc': 'Tecnología con alma. Videojuegos, consultoría tech y soluciones digitales para pymes, despachos y detectives en México.',
-    'f-name-placeholder': 'Tu nombre',
-    'f-email-placeholder': 'tu@email.com',
-    'f-msg-placeholder': 'Cuéntanos de tu proyecto...',
-    'select-default': 'Selecciona una opción',
-    'opt-game': 'Videojuego',
-    'opt-consulting': 'Consultoría tech',
-    'opt-web': 'Sitio web',
-    'opt-other': 'Otro',
-  },
-  en: {
-    'page-title': 'Kitsune Sakura.exe — Technology with a Soul',
-    'meta-desc': 'Technology with a soul. Video games, tech consulting and digital solutions for SMEs, law firms and detectives in Mexico.',
-    'f-name-placeholder': 'Your name',
-    'f-email-placeholder': 'your@email.com',
-    'f-msg-placeholder': 'Tell us about your project...',
-    'select-default': 'Select an option',
-    'opt-game': 'Video game',
-    'opt-consulting': 'Tech consulting',
-    'opt-web': 'Website',
-    'opt-other': 'Other',
-  }
-};
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursor-dot');
+let mx = 0, my = 0, cx = 0, cy = 0;
 
-let currentLang = localStorage.getItem('ks-lang') || 'es';
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursorDot.style.left = mx + 'px';
+  cursorDot.style.top  = my + 'px';
+});
 
-function setLang(lang) {
-  currentLang = lang;
-  localStorage.setItem('ks-lang', lang);
-  document.documentElement.lang = lang;
-
-  // Botones activos
-  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
-  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-
-  // Traducir todos los elementos con data-es / data-en
-  document.querySelectorAll('[data-es]').forEach(el => {
-    const txt = el.getAttribute(`data-${lang}`);
-    if (!txt) return;
-    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-      el.placeholder = txt;
-    } else if (el.tagName === 'OPTION') {
-      el.textContent = txt;
-    } else {
-      // Preserva HTML interno (ej: <em>)
-      if (el.querySelector('em') || el.querySelector('span')) {
-        el.innerHTML = txt;
-      } else {
-        el.textContent = txt;
-      }
-    }
-  });
-
-  // Placeholders y select
-  const nameInput = document.getElementById('f-name');
-  const msgInput  = document.getElementById('f-msg');
-  const t = translations[lang];
-  if (nameInput) nameInput.placeholder = t['f-name-placeholder'];
-  if (msgInput)  msgInput.placeholder  = t['f-msg-placeholder'];
-
-  // Opciones del select
-  const sel = document.getElementById('f-type');
-  if (sel) {
-    sel.options[0].text = t['select-default'];
-    sel.options[1].text = t['opt-game'];
-    sel.options[2].text = t['opt-consulting'];
-    sel.options[3].text = t['opt-web'];
-    sel.options[4].text = t['opt-other'];
-  }
+function animCursor() {
+  cx += (mx - cx) * 0.14;
+  cy += (my - cy) * 0.14;
+  cursor.style.left = cx + 'px';
+  cursor.style.top  = cy + 'px';
+  requestAnimationFrame(animCursor);
 }
+animCursor();
 
 // ── NAV SCROLL ──
 const nav = document.getElementById('nav');
@@ -79,91 +24,167 @@ window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
 
-// ── MOBILE MENU ──
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobile-menu');
+// ── BURGER / DRAWER ──
+const burger = document.getElementById('burger');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('drawer-overlay');
 
-hamburger.addEventListener('click', () => {
-  mobileMenu.classList.toggle('open');
+burger.addEventListener('click', () => {
+  drawer.classList.toggle('open');
+  overlay.classList.toggle('show');
 });
 
-// Cerrar menú al hacer clic en un link
-document.querySelectorAll('.mobile-link').forEach(link => {
-  link.addEventListener('click', () => mobileMenu.classList.remove('open'));
-});
+function closeDrawer() {
+  drawer.classList.remove('open');
+  overlay.classList.remove('show');
+}
 
-// ── SMOOTH SCROLL para links internos ──
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      const offset = 70;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) {
+      window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 68, behavior: 'smooth' });
     }
   });
 });
 
-// ── REVEAL ON SCROLL ──
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      revealObserver.unobserve(entry.target);
+// ── REVEAL ──
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
     }
   });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
 
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ── ACTIVE NAV ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const sio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => {
+        const active = l.getAttribute('href') === '#' + e.target.id;
+        l.style.color = active ? 'var(--rojo)' : '';
+      });
+    }
+  });
+}, { threshold: 0.5 });
+sections.forEach(s => sio.observe(s));
+
+// ── COUNTER ANIMADO ──
+function animateCounter(target, duration = 2000) {
+  const el = document.getElementById('counter');
+  if (!el) return;
+  let start = null;
+  const step = ts => {
+    if (!start) start = ts;
+    const progress = Math.min((ts - start) / duration, 1);
+    el.textContent = Math.floor(progress * target);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+
+// Activar counter cuando sea visible
+const counterEl = document.getElementById('counter');
+if (counterEl) {
+  const cio = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      animateCounter(47);
+      cio.disconnect();
+    }
+  }, { threshold: 0.5 });
+  cio.observe(counterEl);
+}
+
+// ── IDIOMA ──
+let lang = localStorage.getItem('ks-lang') || 'es';
+
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('ks-lang', l);
+  document.documentElement.lang = l;
+  document.getElementById('btn-es').classList.toggle('active', l === 'es');
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+
+  document.querySelectorAll('[data-es]').forEach(el => {
+    const txt = el.getAttribute('data-' + l);
+    if (!txt) return;
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = txt;
+    } else if (el.tagName === 'OPTION') {
+      el.textContent = txt;
+    } else if (el.tagName === 'META') {
+      el.setAttribute('content', txt);
+    } else {
+      el.innerHTML = txt;
+    }
+  });
+
+  // Actualizar placeholders
+  const placeholders = {
+    es: { name: 'Tu nombre completo', email: 'tu@email.com', msg: 'Cuéntanos de tu proyecto...' },
+    en: { name: 'Your full name',     email: 'your@email.com', msg: 'Tell us about your project...' }
+  };
+  const p = placeholders[l];
+  const fn = document.getElementById('f-name');
+  const fe = document.getElementById('f-email');
+  const fm = document.getElementById('f-msg');
+  if (fn) fn.placeholder = p.name;
+  if (fe) fe.placeholder = p.email;
+  if (fm) fm.placeholder = p.msg;
+
+  // Select options
+  const sel = document.getElementById('f-type');
+  if (sel) {
+    const opts = {
+      es: ['Selecciona una opción', 'Videojuego', 'Consultoría tech', 'Sitio web', 'Otro'],
+      en: ['Select an option', 'Video game', 'Tech consulting', 'Website', 'Other']
+    };
+    opts[l].forEach((txt, i) => { if (sel.options[i]) sel.options[i].text = txt; });
+  }
+
+  // Titulo
+  document.title = l === 'es'
+    ? 'Kitsune Sakura.exe — Technology with a Soul'
+    : 'Kitsune Sakura.exe — Technology with a Soul';
+}
 
 // ── FORMULARIO ──
 function handleSubmit(e) {
   e.preventDefault();
-  const btn = document.getElementById('submit-btn');
-  const success = document.getElementById('form-success');
-  const name  = document.getElementById('f-name').value;
-  const email = document.getElementById('f-email').value;
+  const name  = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
   const type  = document.getElementById('f-type').value;
-  const msg   = document.getElementById('f-msg').value;
+  const msg   = document.getElementById('f-msg').value.trim();
+  const btn   = document.getElementById('submit-btn');
+  const ok    = document.getElementById('form-ok');
 
-  // Arma el mailto
-  const subject = encodeURIComponent(`[Kitsune Sakura.exe] Proyecto: ${type} — ${name}`);
-  const body = encodeURIComponent(
-    `Nombre: ${name}\nEmail: ${email}\nTipo de proyecto: ${type}\n\nMensaje:\n${msg}`
-  );
+  if (!name || !email || !msg) return;
+
+  const subject = encodeURIComponent(`[KS.exe] Proyecto: ${type || 'consulta'} — ${name}`);
+  const body = encodeURIComponent(`Nombre: ${name}\nEmail: ${email}\nTipo: ${type || 'no especificado'}\n\nMensaje:\n${msg}`);
   window.location.href = `mailto:hola@kitsune-sakura.mx?subject=${subject}&body=${body}`;
 
-  // Feedback visual
-  btn.style.opacity = '0.6';
   btn.disabled = true;
-  success.classList.add('show');
+  btn.style.opacity = '.6';
+  ok.textContent = ok.getAttribute('data-' + lang);
+  ok.classList.add('show');
 
   setTimeout(() => {
-    btn.style.opacity = '1';
     btn.disabled = false;
+    btn.style.opacity = '1';
     document.getElementById('contact-form').reset();
-    setTimeout(() => success.classList.remove('show'), 3000);
-  }, 2000);
+    setTimeout(() => ok.classList.remove('show'), 3000);
+  }, 2500);
 }
 
-// ── ACTIVE NAV LINK según sección visible ──
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link');
-
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navLinks.forEach(link => {
-        link.style.color = link.getAttribute('href') === `#${entry.target.id}` ? 'var(--rojo)' : '';
-      });
-    }
-  });
-}, { threshold: 0.4 });
-
-sections.forEach(s => sectionObserver.observe(s));
-
 // ── INIT ──
-document.addEventListener('DOMContentLoaded', () => {
-  setLang(currentLang);
-});
+document.addEventListener('DOMContentLoaded', () => setLang(lang));
