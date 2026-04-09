@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Kitsune Sakura.exe — Cotiza tu proyecto o elige un paquete listo para comenzar."/>
+  <title>Tienda · Kitsune Sakura.exe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="tienda.css"/>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Kitsune Sakura<span>.exe</span></a>
+  <div class="nav-links">
+    <a href="index.html#servicios" class="nav-link">servicios</a>
+    <a href="index.html#portafolio" class="nav-link">portafolio</a>
+    <a href="index.html#contacto" class="nav-link">contacto</a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-switch">
+      <button class="lang-btn active" id="btn-es" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO TIENDA ── -->
+<section class="store-hero">
+  <div class="store-hero-inner reveal">
+    <p class="eyebrow" data-es="// elige tu proyecto" data-en="// choose your project">// elige tu proyecto</p>
+    <h1 data-es="Servicios &amp; Precios" data-en="Services &amp; Pricing">Servicios &amp; Precios</h1>
+    <p class="hero-sub" data-es="Paquetes listos para comenzar o cuéntanos de tu proyecto y te cotizamos en menos de 24 horas." data-en="Ready-to-start packages or tell us about your project and we'll quote you in less than 24 hours.">Paquetes listos para comenzar o cuéntanos de tu proyecto y te cotizamos en menos de 24 horas.</p>
+    <div class="tabs">
+      <button class="tab active" id="tab-paquetes" onclick="showTab('paquetes')" data-es="Paquetes listos" data-en="Ready packages">Paquetes listos</button>
+      <button class="tab" id="tab-cotizador" onclick="showTab('cotizador')" data-es="Cotizador personalizado" data-en="Custom quote">Cotizador personalizado</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── PAQUETES ── -->
+<section class="section" id="section-paquetes">
+  <div class="container">
+
+    <!-- CATEGORÍA: WEB -->
+    <div class="cat-header reveal">
+      <p class="cat-tag" data-es="presencia digital" data-en="digital presence">presencia digital</p>
+      <h2 data-es="Sitios web para pymes" data-en="Websites for SMEs">Sitios web para pymes</h2>
+    </div>
+    <div class="plans-grid">
+
+      <div class="plan reveal" style="--delay:.1s">
+        <div class="plan-top">
+          <p class="plan-name" data-es="Básico" data-en="Basic">Básico</p>
+          <div class="plan-price">
+            <span class="price-amount">$9,500</span>
+            <span class="price-cur">MXN</span>
+          </div>
+          <p class="price-note" data-es="+ $1,500 MXN/mes mantenimiento" data-en="+ $1,500 MXN/mo maintenance">+ $1,500 MXN/mes mantenimiento</p>
+        </div>
+        <ul class="plan-features">
+          <li data-es="Hasta 5 páginas" data-en="Up to 5 pages">Hasta 5 páginas</li>
+          <li data-es="Dominio y hosting incluidos" data-en="Domain and hosting included">Dominio y hosting incluidos</li>
+          <li data-es="Formulario de contacto" data-en="Contact form">Formulario de contacto</li>
+          <li data-es="WhatsApp integrado" data-en="WhatsApp integrated">WhatsApp integrado</li>
+          <li data-es="SSL gratuito" data-en="Free SSL">SSL gratuito</li>
+          <li data-es="2 actualizaciones/mes" data-en="2 updates/month">2 actualizaciones/mes</li>
+        </ul>
+        <button class="btn-plan" onclick="selectPlan('Básico - Sitio web', 9500)" data-es="Solicitar este paquete" data-en="Request this package">Solicitar este paquete</button>
+      </div>
+
+      <div class="plan plan-featured reveal" style="--delay:.2s">
+        <div class="plan-badge" data-es="Más popular" data-en="Most popular">Más popular</div>
+        <div class="plan-top">
+          <p class="plan-name" data-es="Profesional" data-en="Professional">Profesional</p>
+          <div class="plan-price">
+            <span class="price-amount">$15,000</span>
+            <span class="price-cur">MXN</span>
+          </div>
+          <p class="price-note" data-es="+ $2,500 MXN/mes mantenimiento" data-en="+ $2,500 MXN/mo maintenance">+ $2,500 MXN/mes mantenimiento</p>
+        </div>
+        <ul class="plan-features">
+          <li data-es="Hasta 10 páginas" data-en="Up to 10 pages">Hasta 10 páginas</li>
+          <li data-es="Diseño personalizado con tu marca" data-en="Custom design with your brand">Diseño personalizado con tu marca</li>
+          <li data-es="SEO básico incluido" data-en="Basic SEO included">SEO básico incluido</li>
+          <li data-es="Google Analytics" data-en="Google Analytics">Google Analytics</li>
+          <li data-es="Blog o catálogo de productos" data-en="Blog or product catalog">Blog o catálogo de productos</li>
+          <li data-es="Reporte mensual de visitas" data-en="Monthly visits report">Reporte mensual de visitas</li>
+          <li data-es="5 actualizaciones/mes" data-en="5 updates/month">5 actualizaciones/mes</li>
+        </ul>
+        <button class="btn-plan btn-plan-featured" onclick="selectPlan('Profesional - Sitio web', 15000)" data-es="Solicitar este paquete" data-en="Request this package">Solicitar este paquete</button>
+      </div>
+
+      <div class="plan reveal" style="--delay:.3s">
+        <div class="plan-top">
+          <p class="plan-name" data-es="Premium" data-en="Premium">Premium</p>
+          <div class="plan-price">
+            <span class="price-amount">$25,000</span>
+            <span class="price-cur">MXN</span>
+          </div>
+          <p class="price-note" data-es="+ $3,500 MXN/mes mantenimiento" data-en="+ $3,500 MXN/mo maintenance">+ $3,500 MXN/mes mantenimiento</p>
+        </div>
+        <ul class="plan-features">
+          <li data-es="Todo lo del Profesional" data-en="Everything in Professional">Todo lo del Profesional</li>
+          <li data-es="Tienda en línea o sistema de reservas" data-en="Online store or booking system">Tienda en línea o sistema de reservas</li>
+          <li data-es="Pasarela de pago integrada" data-en="Payment gateway integrated">Pasarela de pago integrada</li>
+          <li data-es="Panel de administración" data-en="Admin panel">Panel de administración</li>
+          <li data-es="Soporte prioritario" data-en="Priority support">Soporte prioritario</li>
+          <li data-es="Actualizaciones ilimitadas" data-en="Unlimited updates">Actualizaciones ilimitadas</li>
+        </ul>
+        <button class="btn-plan" onclick="selectPlan('Premium - Sitio web', 25000)" data-es="Solicitar este paquete" data-en="Request this package">Solicitar este paquete</button>
+      </div>
+
+    </div>
+
+    <!-- CATEGORÍA: CONSULTORÍA -->
+    <div class="cat-header reveal" style="margin-top:4rem">
+      <p class="cat-tag" data-es="consultoría tech" data-en="tech consulting">consultoría tech</p>
+      <h2 data-es="Soluciones para despachos y detectives" data-en="Solutions for law firms and investigators">Soluciones para despachos y detectives</h2>
+    </div>
+    <div class="plans-grid">
+
+      <div class="plan reveal" style="--delay:.1s">
+        <div class="plan-top">
+          <p class="plan-name" data-es="App de evidencias" data-en="Evidence app">App de evidencias</p>
+          <div class="plan-price">
+            <span class="price-amount">$12,000</span>
+            <span class="price-cur">MXN</span>
+          </div>
+          <p class="price-note" data-es="Pago único" data-en="One-time payment">Pago único</p>
+        </div>
+        <ul class="plan-features">
+          <li data-es="Registro fotográfico con geolocalización" data-en="Photo registry with geolocation">Registro fotográfico con geolocalización</li>
+          <li data-es="Notas y etiquetas por caso" data-en="Notes and tags per case">Notas y etiquetas por caso</li>
+          <li data-es="Exporta reportes en PDF" data-en="Export reports to PDF">Exporta reportes en PDF</li>
+          <li data-es="Acceso desde cualquier dispositivo" data-en="Access from any device">Acceso desde cualquier dispositivo</li>
+        </ul>
+        <button class="btn-plan" onclick="selectPlan('App de evidencias', 12000)" data-es="Solicitar este paquete" data-en="Request this package">Solicitar este paquete</button>
+      </div>
+
+      <div class="plan plan-featured reveal" style="--delay:.2s">
+        <div class="plan-badge" data-es="Más solicitado" data-en="Most requested">Más solicitado</div>
+        <div class="plan-top">
+          <p class="plan-name" data-es="Sistema para despacho" data-en="Law firm system">Sistema para despacho</p>
+          <div class="plan-price">
+            <span class="price-amount">$18,000</span>
+            <span class="price-cur">MXN</span>
+          </div>
+          <p class="price-note" data-es="+ $3,500 MXN/mes soporte" data-en="+ $3,500 MXN/mo support">+ $3,500 MXN/mes soporte</p>
+        </div>
+        <ul class="plan-features">
+          <li data-es="Base de datos de clientes" data-en="Client database">Base de datos de clientes</li>
+          <li data-es="Seguimiento de expedientes" data-en="Case tracking">Seguimiento de expedientes</li>
+          <li data-es="Alertas de fechas y vencimientos" data-en="Date and deadline alerts">Alertas de fechas y vencimientos</li>
+          <li data-es="Generación de documentos" data-en="Document generation">Generación de documentos</li>
+          <li data-es="Calendario de audiencias" data-en="Hearing calendar">Calendario de audiencias</li>
+        </ul>
+        <button class="btn-plan btn-plan-featured" onclick="selectPlan('Sistema para despacho', 18000)" data-es="Solicitar este paquete" data-en="Request this package">Solicitar este paquete</button>
+      </div>
+
+      <div class="plan reveal" style="--delay:.3s">
+        <div class="plan-top">
+          <p class="plan-name" data-es="Automatización pyme" data-en="SME automation">Automatización pyme</p>
+          <div class="plan-price">
+            <span class="price-amount">$8,000</span>
+            <span class="price-cur">MXN</span>
+          </div>
+          <p class="price-note" data-es="Pago único" data-en="One-time payment">Pago único</p>
+        </div>
+        <ul class="plan-features">
+          <li data-es="Scripts de automatización Python" data-en="Python automation scripts">Scripts de automatización Python</li>
+          <li data-es="Reportes automáticos" data-en="Automatic reports">Reportes automáticos</li>
+          <li data-es="Integración con hojas de cálculo" data-en="Spreadsheet integration">Integración con hojas de cálculo</li>
+          <li data-es="Capacitación incluida" data-en="Training included">Capacitación incluida</li>
+        </ul>
+        <button class="btn-plan" onclick="selectPlan('Automatización pyme', 8000)" data-es="Solicitar este paquete" data-en="Request this package">Solicitar este paquete</button>
+      </div>
+
+    </div>
+
+    <!-- CATEGORÍA: VIDEOJUEGOS -->
+    <div class="cat-header reveal" style="margin-top:4rem">
+      <p class="cat-tag" data-es="videojuegos" data-en="video games">videojuegos</p>
+      <h2 data-es="Desarrollo indie y gamificación" data-en="Indie development and gamification">Desarrollo indie y gamificación</h2>
+    </div>
+    <div class="plans-grid plans-grid-2">
+
+      <div class="plan reveal" style="--delay:.1s">
+        <div class="plan-top">
+          <p class="plan-name" data-es="Prototipo jugable" data-en="Playable prototype">Prototipo jugable</p>
+          <div class="plan-price">
+            <span class="price-amount">$15,000</span>
+            <span class="price-cur">MXN</span>
+          </div>
+          <p class="price-note" data-es="Entrega 6–8 semanas" data-en="Delivery 6–8 weeks">Entrega 6–8 semanas</p>
+        </div>
+        <ul class="plan-features">
+          <li data-es="Hasta 3 niveles jugables" data-en="Up to 3 playable levels">Hasta 3 niveles jugables</li>
+          <li data-es="Móvil o PC" data-en="Mobile or PC">Móvil o PC</li>
+          <li data-es="Arte y sonido básicos" data-en="Basic art and sound">Arte y sonido básicos</li>
+          <li data-es="Código fuente incluido" data-en="Source code included">Código fuente incluido</li>
+        </ul>
+        <button class="btn-plan" onclick="selectPlan('Prototipo jugable', 15000)" data-es="Solicitar este paquete" data-en="Request this package">Solicitar este paquete</button>
+      </div>
+
+      <div class="plan plan-featured reveal" style="--delay:.2s">
+        <div class="plan-badge" data-es="Para empresas" data-en="For businesses">Para empresas</div>
+        <div class="plan-top">
+          <p class="plan-name" data-es="Gamificación empresarial" data-en="Business gamification">Gamificación empresarial</p>
+          <div class="plan-price">
+            <span class="price-amount">$25,000</span>
+            <span class="price-cur">MXN</span>
+          </div>
+          <p class="price-note" data-es="Entrega 8–12 semanas" data-en="Delivery 8–12 weeks">Entrega 8–12 semanas</p>
+        </div>
+        <ul class="plan-features">
+          <li data-es="Sistema de puntos y niveles" data-en="Points and levels system">Sistema de puntos y niveles</li>
+          <li data-es="Integrado al negocio del cliente" data-en="Integrated into client's business">Integrado al negocio del cliente</li>
+          <li data-es="Panel de administración" data-en="Admin panel">Panel de administración</li>
+          <li data-es="Capacitación al equipo" data-en="Team training">Capacitación al equipo</li>
+          <li data-es="Soporte 3 meses incluido" data-en="3 months support included">Soporte 3 meses incluido</li>
+        </ul>
+        <button class="btn-plan btn-plan-featured" onclick="selectPlan('Gamificación empresarial', 25000)" data-es="Solicitar este paquete" data-en="Request this package">Solicitar este paquete</button>
+      </div>
+
+    </div>
+
+    <!-- NOTA 3% -->
+    <div class="cats-note reveal">
+      <span class="cats-icon">🌸</span>
+      <p data-es="El 3% de cada proyecto se destina a apoyar a gatos en situación de calle en México. Al contratar con nosotros, eres parte del impacto." data-en="3% of every project goes to support stray cats in Mexico. When you hire us, you are part of the impact.">El 3% de cada proyecto se destina a apoyar a gatos en situación de calle en México. Al contratar con nosotros, eres parte del impacto.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── COTIZADOR ── -->
+<section class="section section-alt" id="section-cotizador" style="display:none">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="tag" data-es="cotizador personalizado" data-en="custom quote">cotizador personalizado</p>
+      <h2 data-es="Cuéntanos de tu proyecto" data-en="Tell us about your project">Cuéntanos de tu proyecto</h2>
+      <p class="section-desc" data-es="Respondemos con una propuesta detallada en menos de 24 horas." data-en="We respond with a detailed proposal in less than 24 hours.">Respondemos con una propuesta detallada en menos de 24 horas.</p>
+    </div>
+
+    <div class="quote-layout">
+      <div class="quote-preview reveal">
+        <div class="quote-card" id="quote-card">
+          <p class="qc-label" data-es="Tu cotización estimada" data-en="Your estimated quote">Tu cotización estimada</p>
+          <p class="qc-price" id="qc-price">$0 MXN</p>
+          <p class="qc-note" id="qc-note" data-es="Selecciona opciones para ver el estimado" data-en="Select options to see estimate">Selecciona opciones para ver el estimado</p>
+          <div class="qc-items" id="qc-items"></div>
+          <div class="qc-cats">
+            <span>🌸</span>
+            <span id="qc-cats-amount">$0</span>
+            <span data-es="para los gatitos (3%)" data-en="for the cats (3%)">para los gatitos (3%)</span>
+          </div>
+        </div>
+      </div>
+
+      <form class="quote-form reveal" id="quote-form" onsubmit="submitQuote(event)" style="--delay:.2s">
+
+        <div class="form-group">
+          <label class="form-label" data-es="Nombre *" data-en="Name *">Nombre *</label>
+          <input type="text" id="q-name" class="form-input" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input type="email" id="q-email" class="form-input" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-es="Empresa o negocio" data-en="Company or business">Empresa o negocio</label>
+          <input type="text" id="q-company" class="form-input"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-es="Tipo de servicio *" data-en="Service type *">Tipo de servicio *</label>
+          <select id="q-service" class="form-input" onchange="updateQuote()" required>
+            <option value="">— Selecciona —</option>
+            <option value="web-basico:9500" data-es="Sitio web básico" data-en="Basic website">Sitio web básico — $9,500</option>
+            <option value="web-pro:15000" data-es="Sitio web profesional" data-en="Professional website">Sitio web profesional — $15,000</option>
+            <option value="web-premium:25000" data-es="Sitio web premium" data-en="Premium website">Sitio web premium — $25,000</option>
+            <option value="consulting:18000" data-es="Sistema para despacho" data-en="Law firm system">Sistema para despacho — $18,000</option>
+            <option value="automation:8000" data-es="Automatización pyme" data-en="SME automation">Automatización pyme — $8,000</option>
+            <option value="evidence:12000" data-es="App de evidencias" data-en="Evidence app">App de evidencias — $12,000</option>
+            <option value="game:15000" data-es="Prototipo de videojuego" data-en="Game prototype">Prototipo de videojuego — $15,000</option>
+            <option value="gamification:25000" data-es="Gamificación empresarial" data-en="Business gamification">Gamificación empresarial — $25,000</option>
+            <option value="custom:0" data-es="Proyecto personalizado" data-en="Custom project">Proyecto personalizado</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-es="¿Necesitas mantenimiento mensual?" data-en="Do you need monthly maintenance?">¿Necesitas mantenimiento mensual?</label>
+          <div class="radio-group">
+            <label class="radio-opt">
+              <input type="radio" name="maintenance" value="0" checked onchange="updateQuote()"/>
+              <span data-es="No por ahora" data-en="Not right now">No por ahora</span>
+            </label>
+            <label class="radio-opt">
+              <input type="radio" name="maintenance" value="1500" onchange="updateQuote()"/>
+              <span data-es="Básico $1,500/mes" data-en="Basic $1,500/mo">Básico $1,500/mes</span>
+            </label>
+            <label class="radio-opt">
+              <input type="radio" name="maintenance" value="2500" onchange="updateQuote()"/>
+              <span data-es="Profesional $2,500/mes" data-en="Professional $2,500/mo">Profesional $2,500/mes</span>
+            </label>
+            <label class="radio-opt">
+              <input type="radio" name="maintenance" value="3500" onchange="updateQuote()"/>
+              <span data-es="Premium $3,500/mes" data-en="Premium $3,500/mo">Premium $3,500/mes</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-es="¿Tienes urgencia de entrega?" data-en="Do you have a delivery urgency?">¿Tienes urgencia de entrega?</label>
+          <select id="q-urgency" class="form-input" onchange="updateQuote()">
+            <option value="0" data-es="Sin urgencia (plazo normal)" data-en="No urgency (normal timeline)">Sin urgencia (plazo normal)</option>
+            <option value="2000" data-es="Urgente — entrega express (+$2,000)" data-en="Urgent — express delivery (+$2,000)">Urgente — entrega express (+$2,000)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-es="Cuéntanos más de tu proyecto" data-en="Tell us more about your project">Cuéntanos más de tu proyecto</label>
+          <textarea id="q-msg" class="form-input form-textarea" rows="4"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary btn-block">
+          <span data-es="Enviar solicitud de cotización" data-en="Send quote request">Enviar solicitud de cotización</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="margin-left:8px"><path d="M2 8h12M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <p class="form-success" id="quote-ok" data-es="✿ Cotización enviada — te contactamos en menos de 24 hrs." data-en="✿ Quote sent — we'll contact you within 24 hrs."></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── MODAL PAQUETE SELECCIONADO ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <p class="modal-tag" data-es="paquete seleccionado" data-en="selected package">paquete seleccionado</p>
+    <h3 class="modal-title" id="modal-plan-name">Plan</h3>
+    <p class="modal-price" id="modal-plan-price">$0 MXN</p>
+    <div class="modal-cats">
+      🌸 <span id="modal-cats">$0 MXN</span> <span data-es="irán para los gatitos (3%)" data-en="will go to the cats (3%)">irán para los gatitos (3%)</span>
+    </div>
+    <p class="modal-desc" data-es="Para continuar, envíanos un mensaje con el paquete que elegiste y nos ponemos en contacto en menos de 24 horas." data-en="To continue, send us a message with the package you chose and we'll get in touch within 24 hours.">Para continuar, envíanos un mensaje con el paquete que elegiste y nos ponemos en contacto en menos de 24 horas.</p>
+    <div class="modal-actions">
+      <a id="modal-wa" href="#" class="btn-primary" target="_blank">
+        <span data-es="Contactar por WhatsApp" data-en="Contact via WhatsApp">Contactar por WhatsApp</span>
+      </a>
+      <a id="modal-email" href="#" class="btn-outline">
+        <span data-es="Enviar por email" data-en="Send by email">Enviar por email</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-logo">Kitsune Sakura<span>.exe</span></span>
+    <span class="footer-cause">🌸 3% <span data-es="para los gatitos en cada proyecto" data-en="for the cats in every project">para los gatitos en cada proyecto</span></span>
+    <span class="footer-copy">© 2025 Kitsune Sakura.exe S.A.S.</span>
+  </div>
+</footer>
+
+<script src="tienda.js"></script>
+</body>
+</html>
