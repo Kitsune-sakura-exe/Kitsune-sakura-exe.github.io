@@ -47,4 +47,4 @@ python3 -m http.server 3000
 | `--crema` | `#FDF6F0` | Fondo principal |
 
 ---
-🌸 1% de cada proyecto va a refugios felinos en México.
+🌸 3% de cada proyecto va a refugios felinos en México.
