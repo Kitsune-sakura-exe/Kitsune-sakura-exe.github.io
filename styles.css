@@ -366,3 +366,126 @@ a.c-val:hover{color:var(--rojo)}
   .hero-heading{font-size:2.4rem}
   .cats-counter{flex-direction:column}
 }
+
+/* ── NAV TIENDA & PORTAL ── */
+.nav-link-store {
+  color: var(--rojo) !important;
+  font-weight: 500;
+}
+.nav-link-portal {
+  color: var(--rosa-m) !important;
+  font-weight: 500;
+}
+.drawer-link-store { color: var(--rojo) !important; font-weight: 500; }
+.drawer-link-portal { color: var(--rosa-m) !important; font-weight: 500; }
+
+/* ── SECCIÓN PLATAFORMA ── */
+.section-plataforma {
+  background: var(--dark);
+  padding: 6rem 3rem;
+}
+.section-plataforma .tag { color: var(--rosa-m); }
+.section-plataforma h2 { color: var(--crema); }
+.section-plataforma .section-desc { color: rgba(253,246,240,.5); }
+.plat-header { margin-bottom: 3rem; }
+
+.plat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.plat-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  transition: all var(--t);
+  cursor: pointer;
+  text-decoration: none;
+}
+.plat-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.08);
+}
+
+/* Decoración pétalos flotantes */
+.plat-card-deco { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.plat-petal {
+  position: absolute;
+  border-radius: 50% 50% 50% 0;
+  opacity: .08;
+}
+.plat-tienda .p1 { width:120px;height:120px;background:var(--rojo);top:-30px;right:-30px; }
+.plat-tienda .p2 { width:60px;height:60px;background:var(--rosa-m);bottom:20px;right:40px; }
+.plat-portal .p3 { width:100px;height:100px;background:var(--rosa-m);top:-20px;right:-20px; }
+.plat-portal .p4 { width:50px;height:50px;background:var(--crema);bottom:30px;left:20px; }
+
+/* Pixeles decorativos para videojuegos */
+.game-deco { opacity:.15; }
+.pixel {
+  position: absolute;
+  background: var(--rosa-m);
+}
+.pixel.p1 { width:12px;height:12px;top:20px;right:20px; }
+.pixel.p2 { width:8px;height:8px;top:36px;right:36px; }
+.pixel.p3 { width:16px;height:16px;bottom:30px;left:24px; }
+.pixel.p4 { width:6px;height:6px;bottom:50px;left:44px; }
+
+.plat-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(255,255,255,.08);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--crema);
+  position: relative;
+  z-index: 1;
+}
+.plat-tienda .plat-icon { background: rgba(192,57,43,.25); color: var(--rosa); }
+.plat-portal .plat-icon { background: rgba(232,136,158,.2); color: var(--rosa-m); }
+.plat-games .plat-icon  { background: rgba(29,107,62,.25); color: #5DCAA5; }
+
+.plat-card h3 {
+  font-family: var(--fd);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--crema);
+  letter-spacing: -.02em;
+  position: relative;
+  z-index: 1;
+}
+.plat-card p {
+  font-size: .88rem;
+  color: rgba(253,246,240,.55);
+  line-height: 1.7;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+.plat-cta {
+  font-family: var(--fm);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  color: var(--rosa-m);
+  position: relative;
+  z-index: 1;
+  transition: color var(--t);
+}
+.plat-tienda .plat-cta { color: var(--rosa); }
+.plat-tienda:hover .plat-cta { color: var(--crema); }
+.plat-portal:hover .plat-cta { color: var(--crema); }
+.plat-cta-coming { color: #5DCAA5 !important; }
+
+@media(max-width:900px) {
+  .plat-grid { grid-template-columns: 1fr; }
+  .section-plataforma { padding: 4rem 1.5rem; }
+}

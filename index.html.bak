@@ -29,9 +29,8 @@
   <ul class="nav-links">
     <li><a href="#servicios" class="nav-link" data-es="servicios" data-en="services">servicios</a></li>
     <li><a href="#portafolio" class="nav-link" data-es="portafolio" data-en="portfolio">portafolio</a></li>
+    <li><a href="#nosotros" class="nav-link" data-es="nosotros" data-en="about">nosotros</a></li>
     <li><a href="#gatitos" class="nav-link" data-es="gatitos" data-en="cats">gatitos</a></li>
-    <li><a href="tienda.html" class="nav-link nav-link-store" data-es="🛒 tienda" data-en="🛒 store">🛒 tienda</a></li>
-    <li><a href="portal.html" class="nav-link nav-link-portal" data-es="👤 portal" data-en="👤 portal">👤 portal</a></li>
     <li><a href="#contacto" class="btn-nav" data-es="contacto" data-en="contact">contacto</a></li>
   </ul>
   <div class="nav-right">
@@ -49,9 +48,8 @@
 <div class="drawer" id="drawer">
   <a href="#servicios" class="drawer-link" onclick="closeDrawer()" data-es="Servicios" data-en="Services">Servicios</a>
   <a href="#portafolio" class="drawer-link" onclick="closeDrawer()" data-es="Portafolio" data-en="Portfolio">Portafolio</a>
-  <a href="#gatitos" class="drawer-link" onclick="closeDrawer()" data-es="Gatitos 🌸" data-en="Cats 🌸">Gatitos 🌸</a>
-  <a href="tienda.html" class="drawer-link drawer-link-store" onclick="closeDrawer()" data-es="🛒 Tienda" data-en="🛒 Store">🛒 Tienda</a>
-  <a href="portal.html" class="drawer-link drawer-link-portal" onclick="closeDrawer()" data-es="👤 Portal clientes" data-en="👤 Client portal">👤 Portal clientes</a>
+  <a href="#nosotros" class="drawer-link" onclick="closeDrawer()" data-es="Nosotros" data-en="About">Nosotros</a>
+  <a href="#gatitos" class="drawer-link" onclick="closeDrawer()" data-es="Gatitos" data-en="Cats">Gatitos</a>
   <a href="#contacto" class="drawer-link" onclick="closeDrawer()" data-es="Contacto" data-en="Contact">Contacto</a>
 </div>
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
@@ -352,62 +350,6 @@
 </section>
 
 <!-- ── FOOTER ── -->
-
-<!-- ── PLATAFORMA ── -->
-<section class="section section-plataforma" id="plataforma">
-  <div class="container">
-    <div class="plat-header reveal">
-      <p class="tag" data-es="07 · plataforma" data-en="07 · platform">07 · plataforma</p>
-      <h2 data-es="Todo en un solo lugar" data-en="Everything in one place">Todo en un solo lugar</h2>
-      <p class="section-desc" data-es="Explora nuestros servicios o accede a tu espacio de cliente." data-en="Explore our services or access your client space.">Explora nuestros servicios o accede a tu espacio de cliente.</p>
-    </div>
-    <div class="plat-grid">
-
-      <a href="tienda.html" class="plat-card plat-tienda reveal" style="--delay:.1s">
-        <div class="plat-card-deco">
-          <div class="plat-petal p1"></div>
-          <div class="plat-petal p2"></div>
-        </div>
-        <div class="plat-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M4 8h24l-2 14H6L4 8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="26" r="2" stroke="currentColor" stroke-width="1.8"/><circle cx="22" cy="26" r="2" stroke="currentColor" stroke-width="1.8"/><path d="M9 13h14M9 17h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-        </div>
-        <h3 data-es="Tienda &amp; Cotizador" data-en="Store &amp; Quotes">Tienda &amp; Cotizador</h3>
-        <p data-es="Paquetes listos o cotización personalizada para tu proyecto." data-en="Ready packages or custom quote for your project.">Paquetes listos o cotización personalizada para tu proyecto.</p>
-        <span class="plat-cta" data-es="Ver servicios →" data-en="See services →">Ver servicios →</span>
-      </a>
-
-      <a href="portal.html" class="plat-card plat-portal reveal" style="--delay:.2s">
-        <div class="plat-card-deco">
-          <div class="plat-petal p3"></div>
-          <div class="plat-petal p4"></div>
-        </div>
-        <div class="plat-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="10" r="5" stroke="currentColor" stroke-width="1.8"/><path d="M6 26c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M20 20l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <h3 data-es="Portal de clientes" data-en="Client portal">Portal de clientes</h3>
-        <p data-es="Accede a tus proyectos, archivos y facturas con tu cuenta Google." data-en="Access your projects, files and invoices with your Google account.">Accede a tus proyectos, archivos y facturas con tu cuenta Google.</p>
-        <span class="plat-cta" data-es="Entrar al portal →" data-en="Enter portal →">Entrar al portal →</span>
-      </a>
-
-      <div class="plat-card plat-games reveal" style="--delay:.3s">
-        <div class="plat-card-deco game-deco">
-          <span class="pixel p1"></span>
-          <span class="pixel p2"></span>
-          <span class="pixel p3"></span>
-          <span class="pixel p4"></span>
-        </div>
-        <div class="plat-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="9" width="28" height="16" rx="5" stroke="currentColor" stroke-width="1.8"/><path d="M10 17h4M12 15v4M20 16h4M21 19h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <h3 data-es="Juego indie — próximo" data-en="Indie game — coming soon">Juego indie — próximo</h3>
-        <p data-es="Nuestro primer videojuego está en desarrollo. Sé el primero en jugarlo." data-en="Our first video game is in development. Be the first to play it.">Nuestro primer videojuego está en desarrollo. Sé el primero en jugarlo.</p>
-        <span class="plat-cta plat-cta-coming" data-es="Próximamente ✿" data-en="Coming soon ✿">Próximamente ✿</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
@@ -420,10 +362,6 @@
     <div class="footer-right">
       <span class="footer-copy">© 2025 Kitsune Sakura.exe S.A.S.</span>
       <div class="footer-links">
-        <a href="tienda.html" class="footer-link" data-es="Tienda" data-en="Store">Tienda</a>
-        <span class="footer-sep">·</span>
-        <a href="portal.html" class="footer-link" data-es="Portal" data-en="Portal">Portal</a>
-        <span class="footer-sep">·</span>
         <a href="https://github.com/Kitsune-sakura-exe" target="_blank" rel="noopener" class="footer-link">GitHub</a>
         <span class="footer-sep">·</span>
         <a href="#inicio" class="footer-link" data-es="Inicio" data-en="Top">Inicio</a>
