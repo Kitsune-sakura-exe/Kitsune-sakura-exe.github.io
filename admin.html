@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin · Kitsune Sakura.exe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <p class="login-logo">KS<span>.exe</span></p>
+    <p class="login-tag">// panel de administración</p>
+    <h1>Acceso restringido</h1>
+    <p class="login-sub">Solo el equipo de Kitsune Sakura.exe puede acceder a este panel.</p>
+    <button class="btn-google" id="btn-google" onclick="adminLogin()">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink:0">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+        <path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+      </svg>
+      Entrar con Google
+    </button>
+    <p class="login-error" id="login-error"></p>
+  </div>
+</div>
+
+<!-- ── ADMIN PANEL ── -->
+<div class="admin" id="admin" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <span class="sidebar-logo">KS<span>.exe</span></span>
+      <span class="sidebar-role">Admin</span>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="snav active" onclick="showTab('dashboard')" id="nav-dashboard">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="1" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
+        Dashboard
+      </button>
+      <button class="snav" onclick="showTab('clientes')" id="nav-clientes">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="5" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M2 13c0-3.038 2.462-5.5 5.5-5.5S13 9.962 13 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Clientes
+      </button>
+      <button class="snav" onclick="showTab('proyectos')" id="nav-proyectos">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="2" width="13" height="11" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M4 6h7M4 9h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Proyectos
+      </button>
+      <button class="snav" onclick="showTab('archivos')" id="nav-archivos">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M8 1H3a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2V7L8 1z" stroke="currentColor" stroke-width="1.3"/><path d="M8 1v6h6" stroke="currentColor" stroke-width="1.3"/></svg>
+        Archivos
+      </button>
+      <button class="snav" onclick="showTab('facturas')" id="nav-facturas">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="2" y="1" width="11" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M5 5h5M5 8h5M5 11h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+        Facturas
+      </button>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="index.html" class="sidebar-ext">← Sitio web</a>
+      <button onclick="adminLogout()" class="sidebar-logout">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <h2 class="topbar-title" id="topbar-title">Dashboard</h2>
+      <div class="topbar-right">
+        <span class="topbar-user" id="topbar-user"></span>
+        <button class="btn-primary" id="topbar-action" onclick="openModal('proyecto')" style="display:none">+ Nuevo</button>
+      </div>
+    </div>
+
+    <!-- ── DASHBOARD ── -->
+    <section class="tab active" id="tab-dashboard">
+      <div class="stats-row">
+        <div class="stat-card"><p class="stat-l">Clientes</p><p class="stat-n" id="d-clientes">—</p></div>
+        <div class="stat-card"><p class="stat-l">Proyectos activos</p><p class="stat-n" id="d-activos">—</p></div>
+        <div class="stat-card"><p class="stat-l">Facturas pendientes</p><p class="stat-n" id="d-pendientes">—</p></div>
+        <div class="stat-card accent"><p class="stat-l">🌸 Aportado gatitos</p><p class="stat-n" id="d-cats">$0</p></div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-box">
+          <div class="dash-box-header">
+            <h3>Proyectos recientes</h3>
+            <button onclick="showTab('proyectos')" class="btn-link">Ver todos →</button>
+          </div>
+          <div id="d-proyectos-list"><div class="loading">Cargando...</div></div>
+        </div>
+        <div class="dash-box">
+          <div class="dash-box-header">
+            <h3>Facturas pendientes</h3>
+            <button onclick="showTab('facturas')" class="btn-link">Ver todas →</button>
+          </div>
+          <div id="d-facturas-list"><div class="loading">Cargando...</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CLIENTES ── -->
+    <section class="tab" id="tab-clientes">
+      <div class="table-header">
+        <input type="text" class="search-input" placeholder="Buscar cliente..." oninput="filterTable('clientes-table', this.value)"/>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="clientes-table">
+          <thead><tr><th>Cliente</th><th>Email</th><th>Proyectos</th><th>Registro</th><th>Acciones</th></tr></thead>
+          <tbody id="clientes-tbody"><tr><td colspan="5" class="loading">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── PROYECTOS ── -->
+    <section class="tab" id="tab-proyectos">
+      <div class="table-header">
+        <input type="text" class="search-input" placeholder="Buscar proyecto..." oninput="filterTable('proyectos-table', this.value)"/>
+        <button class="btn-primary" onclick="openModal('proyecto')">+ Nuevo proyecto</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="proyectos-table">
+          <thead><tr><th>Proyecto</th><th>Cliente</th><th>Tipo</th><th>Estado</th><th>Progreso</th><th>Acciones</th></tr></thead>
+          <tbody id="proyectos-tbody"><tr><td colspan="6" class="loading">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── ARCHIVOS ── -->
+    <section class="tab" id="tab-archivos">
+      <div class="table-header">
+        <input type="text" class="search-input" placeholder="Buscar archivo..." oninput="filterTable('archivos-table', this.value)"/>
+        <button class="btn-primary" onclick="openModal('archivo')">+ Subir archivo</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="archivos-table">
+          <thead><tr><th>Archivo</th><th>Cliente</th><th>Proyecto</th><th>Tamaño</th><th>Fecha</th><th>Acciones</th></tr></thead>
+          <tbody id="archivos-tbody"><tr><td colspan="6" class="loading">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── FACTURAS ── -->
+    <section class="tab" id="tab-facturas">
+      <div class="table-header">
+        <input type="text" class="search-input" placeholder="Buscar factura..." oninput="filterTable('facturas-table', this.value)"/>
+        <button class="btn-primary" onclick="openModal('factura')">+ Nueva factura</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table" id="facturas-table">
+          <thead><tr><th>#</th><th>Cliente</th><th>Concepto</th><th>Monto</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+          <tbody id="facturas-tbody"><tr><td colspan="7" class="loading">Cargando...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── MODALES ── -->
+
+<!-- Modal Proyecto -->
+<div class="modal-overlay" id="modal-proyecto">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-proyecto-title">Nuevo proyecto</h3>
+      <button onclick="closeModal('proyecto')" class="modal-close">✕</button>
+    </div>
+    <form id="form-proyecto" onsubmit="saveProyecto(event)">
+      <div class="form-grid">
+        <div class="fg">
+          <label>Nombre del proyecto *</label>
+          <input type="text" id="p-nombre" required/>
+        </div>
+        <div class="fg">
+          <label>Cliente (email) *</label>
+          <input type="email" id="p-cliente-email" required placeholder="email@gmail.com"/>
+        </div>
+        <div class="fg">
+          <label>Tipo de servicio</label>
+          <select id="p-tipo">
+            <option>Sitio web</option>
+            <option>Consultoría tech</option>
+            <option>Videojuego</option>
+            <option>Automatización</option>
+            <option>App de evidencias</option>
+            <option>Gamificación</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Estado</label>
+          <select id="p-estado">
+            <option value="activo">Activo</option>
+            <option value="revision">En revisión</option>
+            <option value="entregado">Entregado</option>
+            <option value="pausado">Pausado</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Progreso (%) *</label>
+          <input type="number" id="p-progreso" min="0" max="100" value="0" required/>
+        </div>
+        <div class="fg">
+          <label>Fecha de inicio</label>
+          <input type="date" id="p-fecha"/>
+        </div>
+        <div class="fg fg-full">
+          <label>Descripción</label>
+          <textarea id="p-desc" rows="3"></textarea>
+        </div>
+      </div>
+      <input type="hidden" id="p-id"/>
+      <div class="modal-actions">
+        <button type="button" onclick="closeModal('proyecto')" class="btn-ghost">Cancelar</button>
+        <button type="submit" class="btn-primary">Guardar proyecto</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Archivo -->
+<div class="modal-overlay" id="modal-archivo">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Registrar archivo</h3>
+      <button onclick="closeModal('archivo')" class="modal-close">✕</button>
+    </div>
+    <form id="form-archivo" onsubmit="saveArchivo(event)">
+      <div class="form-grid">
+        <div class="fg">
+          <label>Nombre del archivo *</label>
+          <input type="text" id="a-nombre" required placeholder="documento.pdf"/>
+        </div>
+        <div class="fg">
+          <label>Cliente (email) *</label>
+          <input type="email" id="a-cliente-email" required/>
+        </div>
+        <div class="fg">
+          <label>Proyecto relacionado</label>
+          <input type="text" id="a-proyecto" placeholder="Nombre del proyecto"/>
+        </div>
+        <div class="fg">
+          <label>Tamaño</label>
+          <input type="text" id="a-tamano" placeholder="2.4 MB"/>
+        </div>
+        <div class="fg fg-full">
+          <label>URL del archivo (Google Drive, Dropbox, etc.)</label>
+          <input type="url" id="a-url" placeholder="https://drive.google.com/..."/>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" onclick="closeModal('archivo')" class="btn-ghost">Cancelar</button>
+        <button type="submit" class="btn-primary">Guardar archivo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal Factura -->
+<div class="modal-overlay" id="modal-factura">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-factura-title">Nueva factura</h3>
+      <button onclick="closeModal('factura')" class="modal-close">✕</button>
+    </div>
+    <form id="form-factura" onsubmit="saveFactura(event)">
+      <div class="form-grid">
+        <div class="fg">
+          <label>Número de factura *</label>
+          <input type="text" id="f-numero" required placeholder="KIT-001-2025"/>
+        </div>
+        <div class="fg">
+          <label>Cliente (email) *</label>
+          <input type="email" id="f-cliente-email" required/>
+        </div>
+        <div class="fg fg-full">
+          <label>Concepto *</label>
+          <input type="text" id="f-concepto" required placeholder="Desarrollo sitio web profesional"/>
+        </div>
+        <div class="fg">
+          <label>Monto (MXN) *</label>
+          <input type="number" id="f-monto" required min="0" step="100"/>
+        </div>
+        <div class="fg">
+          <label>Estado</label>
+          <select id="f-estado">
+            <option value="pendiente">Pendiente</option>
+            <option value="pagada">Pagada</option>
+            <option value="vencida">Vencida</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Fecha</label>
+          <input type="date" id="f-fecha"/>
+        </div>
+        <div class="fg fg-full">
+          <label>URL del PDF (opcional)</label>
+          <input type="url" id="f-url" placeholder="https://drive.google.com/..."/>
+        </div>
+      </div>
+      <input type="hidden" id="f-id"/>
+      <div class="modal-actions">
+        <button type="button" onclick="closeModal('factura')" class="btn-ghost">Cancelar</button>
+        <button type="submit" class="btn-primary">Guardar factura</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script type="module" src="admin.js"></script>
+</body>
+</html>
