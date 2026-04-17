@@ -1,7 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
-  getAuth, signInWithRedirect, getRedirectResult, GoogleAuthProvider,
-  onAuthStateChanged, signOut
+  getAuth,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, collection, query, where, orderBy,
@@ -26,12 +29,10 @@ const auth = getAuth(app);
 const db   = getFirestore(app);
 
 // ── HELPERS ──
-// Escape para prevenir XSS al interpolar datos en innerHTML
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({
   '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
 }[c]));
 
-// Solo permitir URLs http(s), prevenir javascript:
 const safeUrl = (u) => {
   if (!u) return '';
   const s = String(u).trim();
@@ -39,17 +40,8 @@ const safeUrl = (u) => {
 };
 
 // ── AUTH ──
-// Procesar resultado del redirect al cargar la página
-getRedirectResult(auth).catch(err => {
-  if (err?.code && err.code !== 'auth/no-auth-event') {
-    console.error('Auth redirect error:', err);
-    const errEl = document.getElementById('login-error');
-    if (errEl) errEl.textContent = 'Error al iniciar sesión: ' + (err.message || err.code);
-  }
-});
-
 onAuthStateChanged(auth, user => {
-  if (user && user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase() && user.emailVerified) {
+  if (user && user.email?.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin').style.display = 'flex';
     document.getElementById('topbar-user').textContent = user.displayName || user.email;
@@ -63,18 +55,65 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-window.adminLogin = async () => {
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({ login_hint: ADMIN_EMAIL });
+// Login con email + password
+window.adminLogin = async (e) => {
+  if (e && e.preventDefault) e.preventDefault();
+  const email = document.getElementById('admin-email').value.trim().toLowerCase();
+  const password = document.getElementById('admin-password').value;
+  const errEl = document.getElementById('login-error');
+  const btn = document.getElementById('btn-login');
+
+  errEl.textContent = '';
+
+  if (email !== ADMIN_EMAIL.toLowerCase()) {
+    errEl.textContent = '⚠ Email no autorizado.';
+    return;
+  }
+  if (!password || password.length < 6) {
+    errEl.textContent = 'Contraseña requerida (mínimo 6 caracteres).';
+    return;
+  }
+
+  const originalText = btn.textContent;
+  btn.textContent = 'Iniciando sesión...';
+  btn.disabled = true;
+
   try {
-    document.getElementById('btn-google').textContent = 'Redirigiendo a Google...';
-    await signInWithRedirect(auth, provider);
-    // signInWithRedirect no retorna aquí: la página se redirige a Google.
-    // El resultado se procesa al volver, en getRedirectResult arriba.
+    await signInWithEmailAndPassword(auth, email, password);
+    // onAuthStateChanged se encarga del resto
   } catch (err) {
     console.error(err);
-    document.getElementById('btn-google').innerHTML = `<svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink:0"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg> Entrar con Google`;
-    document.getElementById('login-error').textContent = 'Error al iniciar sesión: ' + (err.message || err.code);
+    const msg = {
+      'auth/invalid-credential': 'Email o contraseña incorrectos.',
+      'auth/user-not-found': 'Usuario no encontrado.',
+      'auth/wrong-password': 'Contraseña incorrecta.',
+      'auth/too-many-requests': 'Demasiados intentos. Espera un momento o usa "Olvidé mi contraseña".',
+      'auth/network-request-failed': 'Error de conexión. Revisa tu internet.'
+    }[err.code] || ('Error: ' + (err.message || err.code));
+    errEl.textContent = msg;
+    btn.textContent = originalText;
+    btn.disabled = false;
+  }
+};
+
+// Recuperar contraseña
+window.adminResetPassword = async () => {
+  const email = document.getElementById('admin-email').value.trim().toLowerCase() || ADMIN_EMAIL;
+  const errEl = document.getElementById('login-error');
+  errEl.textContent = '';
+
+  if (email !== ADMIN_EMAIL.toLowerCase()) {
+    errEl.textContent = '⚠ Solo se puede recuperar la contraseña del admin.';
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    errEl.style.color = 'var(--verde, green)';
+    errEl.textContent = '✓ Revisa tu correo para restablecer la contraseña.';
+  } catch (err) {
+    console.error(err);
+    errEl.textContent = 'Error al enviar el correo: ' + (err.message || err.code);
   }
 };
 
@@ -262,37 +301,9 @@ window.closeModal = (type) => {
 };
 
 // ── RESOLVER CLIENTE ──
-// Busca el uid del cliente por email. Si no existe, retorna null (no el email).
-// Así el clienteId queda consistente: o es el uid real, o null.
 async function resolveClienteId(email) {
   const usersSnap = await getDocs(query(collection(db, 'usuarios'), where('email', '==', email)));
   return usersSnap.empty ? null : usersSnap.docs[0].id;
-}
-
-// ── RECONCILIACIÓN ──
-// Cuando se crea un cliente (por el admin o al loguearse el cliente por primera vez),
-// buscamos proyectos/archivos/facturas con clienteId null que coincidan por email
-// y les asignamos el uid correcto.
-async function reconcileClienteId(clienteId, clienteEmail) {
-  if (!clienteId || !clienteEmail) return;
-  const batch = writeBatch(db);
-  let updates = 0;
-  for (const col of ['proyectos', 'archivos', 'facturas']) {
-    const snap = await getDocs(query(
-      collection(db, col),
-      where('clienteEmail', '==', clienteEmail)
-    ));
-    snap.docs.forEach(d => {
-      if (!d.data().clienteId || d.data().clienteId === clienteEmail) {
-        batch.update(doc(db, col, d.id), { clienteId });
-        updates++;
-      }
-    });
-  }
-  if (updates > 0) {
-    await batch.commit();
-    console.log(`Reconciliados ${updates} documentos para ${clienteEmail}`);
-  }
 }
 
 // ── GUARDAR PROYECTO ──
