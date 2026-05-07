@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#00d4aa">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="InvestAI">
+  <meta name="description" content="Asistente inteligente de inversiones - cripto y acciones">
+  <title>InvestAI</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-brand">
+    <span class="logo">📈</span>
+    <h1>InvestAI</h1>
+  </div>
+  <div class="header-actions">
+    <button id="notif-btn" class="icon-btn" title="Activar notificaciones">🔔</button>
+    <button id="settings-btn" class="icon-btn" title="Configuración">⚙️</button>
+  </div>
+</header>
+
+<main class="app-main">
+
+  <!-- TAB: DASHBOARD -->
+  <section class="tab-content active" id="tab-dashboard">
+    <div class="card portfolio-card">
+      <div class="card-label">Capital Total</div>
+      <div class="portfolio-value" id="total-value">$0.00</div>
+      <div class="portfolio-pnl" id="total-pnl">+$0.00 (0.00%)</div>
+      <div class="portfolio-meta">
+        <span>Invertido: <strong id="invested-amount">$0.00</strong></span>
+        <span>Disponible: <strong id="available-amount">$0.00</strong></span>
+      </div>
+    </div>
+
+    <div class="card ai-insight-card">
+      <div class="card-header">
+        <span>🤖 Consejo IA del día</span>
+        <button id="refresh-insight" class="btn-small">Actualizar</button>
+      </div>
+      <div class="ai-insight-text" id="ai-insight">Configura tu clave Claude API en 🤖 IA para obtener consejos personalizados.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span>🔥 Top Movimientos 24h</span></div>
+      <div id="top-movers"><div class="loading-spinner"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span>⚖️ Nivel de Riesgo</span></div>
+      <div class="risk-bar"><div class="risk-fill" id="risk-fill" style="width: 20%"></div></div>
+      <div class="risk-labels"><span>Bajo</span><span>Medio</span><span>Alto</span></div>
+      <p class="risk-description" id="risk-desc">Perfil: Conservador — Prioriza preservar capital</p>
+    </div>
+  </section>
+
+  <!-- TAB: MERCADO -->
+  <section class="tab-content" id="tab-market">
+    <div class="market-filter">
+      <button class="filter-btn active" data-filter="crypto">Cripto</button>
+      <button class="filter-btn" data-filter="stocks">Acciones</button>
+    </div>
+    <div id="market-list"><div class="loading-spinner"></div></div>
+  </section>
+
+  <!-- TAB: PORTAFOLIO -->
+  <section class="tab-content" id="tab-portfolio">
+    <button class="btn-primary btn-full" id="add-position-btn">+ Agregar Inversión</button>
+    <div id="positions-list">
+      <p class="empty-state">💼 No tienes inversiones aún. ¡Agrega tu primera posición!</p>
+    </div>
+  </section>
+
+  <!-- TAB: ALERTAS -->
+  <section class="tab-content" id="tab-alerts">
+    <button class="btn-primary btn-full" id="add-alert-btn">+ Nueva Alerta de Precio</button>
+    <div id="alerts-list">
+      <p class="empty-state">🔔 No tienes alertas configuradas.</p>
+    </div>
+  </section>
+
+  <!-- TAB: IA -->
+  <section class="tab-content" id="tab-ai">
+    <div class="card">
+      <div class="card-header"><span>🔑 Claves API</span></div>
+      <label class="setting-label">Claude API Key (para análisis IA)</label>
+      <input type="password" id="claude-api-key" placeholder="sk-ant-api03-..." class="input-field">
+      <label class="setting-label">Finnhub API Key (para precios de acciones — gratis en finnhub.io)</label>
+      <input type="text" id="finnhub-api-key" placeholder="tu_token_finnhub" class="input-field">
+      <button id="save-keys-btn" class="btn-primary btn-full">Guardar Claves</button>
+      <p class="hint">🔒 Las claves se guardan únicamente en tu dispositivo (localStorage). Nunca se envían a ningún servidor nuestro.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <span>🤖 Análisis de Mercado</span>
+        <button id="get-analysis-btn" class="btn-small">Analizar ahora</button>
+      </div>
+      <div id="ai-analysis-output" class="ai-output">Presiona &ldquo;Analizar ahora&rdquo; para obtener recomendaciones personalizadas basadas en el mercado actual y tu portafolio.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><span>📚 Historial de Decisiones</span></div>
+      <div id="decisions-history"><p class="empty-state">Aún no hay decisiones registradas.</p></div>
+    </div>
+  </section>
+
+</main>
+
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-tab="dashboard"><span class="nav-icon">📊</span><span class="nav-label">Dashboard</span></button>
+  <button class="nav-btn" data-tab="market"><span class="nav-icon">📈</span><span class="nav-label">Mercado</span></button>
+  <button class="nav-btn" data-tab="portfolio"><span class="nav-icon">💼</span><span class="nav-label">Portafolio</span></button>
+  <button class="nav-btn" data-tab="alerts"><span class="nav-icon">🔔</span><span class="nav-label">Alertas</span></button>
+  <button class="nav-btn" data-tab="ai"><span class="nav-icon">🤖</span><span class="nav-label">IA</span></button>
+</nav>
+
+<!-- MODAL: Agregar Posición -->
+<div class="modal-overlay" id="modal-position">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Agregar Inversión</h3>
+      <button class="modal-close" data-modal="modal-position">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="setting-label">Tipo de activo</label>
+      <select id="pos-asset-type" class="input-field">
+        <option value="crypto">Criptomoneda</option>
+        <option value="stock">Acción / ETF</option>
+      </select>
+      <label class="setting-label">Símbolo</label>
+      <input type="text" id="pos-symbol" placeholder="Ej: BTC, ETH, AAPL, SPY" class="input-field">
+      <label class="setting-label">Cantidad</label>
+      <input type="number" id="pos-amount" placeholder="Ej: 0.001" class="input-field" step="any" min="0">
+      <label class="setting-label">Precio de compra (USD)</label>
+      <input type="number" id="pos-buy-price" placeholder="Ej: 42000" class="input-field" step="any" min="0">
+      <label class="setting-label">Fecha de compra</label>
+      <input type="date" id="pos-date" class="input-field">
+      <button id="save-position-btn" class="btn-primary btn-full">Guardar Posición</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Nueva Alerta -->
+<div class="modal-overlay" id="modal-alert">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Nueva Alerta de Precio</h3>
+      <button class="modal-close" data-modal="modal-alert">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="setting-label">Tipo de activo</label>
+      <select id="alert-asset-type" class="input-field">
+        <option value="crypto">Criptomoneda</option>
+        <option value="stock">Acción / ETF</option>
+      </select>
+      <label class="setting-label">Símbolo</label>
+      <input type="text" id="alert-symbol" placeholder="Ej: BTC, ETH, AAPL" class="input-field">
+      <label class="setting-label">Condición</label>
+      <select id="alert-condition" class="input-field">
+        <option value="above">Precio sube a...</option>
+        <option value="below">Precio baja a...</option>
+      </select>
+      <label class="setting-label">Precio objetivo (USD)</label>
+      <input type="number" id="alert-price" placeholder="Ej: 50000" class="input-field" step="any" min="0">
+      <button id="save-alert-btn" class="btn-primary btn-full">Activar Alerta</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Configuración -->
+<div class="modal-overlay" id="modal-settings">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>⚙️ Configuración</h3>
+      <button class="modal-close" data-modal="modal-settings">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="setting-label">Capital inicial disponible (USD)</label>
+      <input type="number" id="initial-capital" placeholder="500" class="input-field" min="1">
+      <label class="setting-label">Perfil de riesgo</label>
+      <select id="risk-profile" class="input-field">
+        <option value="conservative">Conservador — Preservar capital</option>
+        <option value="moderate">Moderado — Balance riesgo/ganancia</option>
+        <option value="aggressive">Agresivo — Máximas ganancias</option>
+      </select>
+      <label class="setting-label">Actualizar precios cada</label>
+      <select id="refresh-interval" class="input-field">
+        <option value="60000">1 minuto</option>
+        <option value="300000">5 minutos</option>
+        <option value="600000">10 minutos</option>
+      </select>
+      <button id="save-settings-btn" class="btn-primary btn-full">Guardar</button>
+      <button id="export-data-btn" class="btn-secondary btn-full">Exportar Datos JSON</button>
+      <button id="clear-data-btn" class="btn-danger btn-full" style="margin-top:8px">Eliminar Todos los Datos</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

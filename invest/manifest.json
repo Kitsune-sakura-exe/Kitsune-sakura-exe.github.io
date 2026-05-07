@@ -1,0 +1,20 @@
+{
+  "name": "InvestAI - Decisiones de Inversión",
+  "short_name": "InvestAI",
+  "description": "Asistente inteligente para cripto y acciones",
+  "start_url": "/invest/index.html",
+  "scope": "/invest/",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#00d4aa",
+  "orientation": "any",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
