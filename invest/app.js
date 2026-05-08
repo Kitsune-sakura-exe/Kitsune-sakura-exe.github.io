@@ -28,15 +28,18 @@ const CRYPTO_LIST = [
 ];
 
 const STOCK_LIST = [
-  { symbol: 'SPY',  name: 'S&P 500 ETF',  icon: '📊' },
-  { symbol: 'QQQ',  name: 'Nasdaq ETF',   icon: '💹' },
-  { symbol: 'AAPL', name: 'Apple',        icon: '🍎' },
-  { symbol: 'MSFT', name: 'Microsoft',    icon: '🖥' },
-  { symbol: 'TSLA', name: 'Tesla',        icon: '⚡' },
-  { symbol: 'NVDA', name: 'NVIDIA',       icon: '🎮' },
-  { symbol: 'AMZN', name: 'Amazon',       icon: '\ud83d�' },
-  { symbol: 'GOOGL', name: 'Alphabet',   icon: '🔍' }
+  { symbol: 'SPY',  name: 'S&P 500 ETF',  icon: 'S' },
+  { symbol: 'QQQ',  name: 'Nasdaq ETF',   icon: 'Q' },
+  { symbol: 'AAPL', name: 'Apple',        icon: 'A' },
+  { symbol: 'MSFT', name: 'Microsoft',    icon: 'M' },
+  { symbol: 'TSLA', name: 'Tesla',        icon: 'T' },
+  { symbol: 'NVDA', name: 'NVIDIA',       icon: 'N' },
+  { symbol: 'AMZN', name: 'Amazon',       icon: 'Z' },
+  { symbol: 'GOOGL', name: 'Alphabet',    icon: 'G' }
 ];
+
+// $ accepts both 'id' and '#id' formats
+const $ = sel => document.getElementById(sel[0] === '#' ? sel.slice(1) : sel);
 
 // ---------- INIT ----------
 
@@ -151,9 +154,7 @@ function setupListeners() {
   });
 }
 
-const $ = id => document.getElementById(id);
-
-// ---------- CRYPTO PRICES (CoinGecko — free, no key) ----------
+// ---------- CRYPTO PRICES (CoinGecko - free, no key) ----------
 
 async function fetchCryptoPrices() {
   const ids = CRYPTO_LIST.map(c => c.id).join(',');
@@ -173,7 +174,7 @@ async function fetchCryptoPrices() {
   }
 }
 
-// ---------- STOCK PRICES (Finnhub — free, user key) ----------
+// ---------- STOCK PRICES (Finnhub - free, user key) ----------
 
 async function fetchStockPrices() {
   const key = STATE.settings.finnhubApiKey;
@@ -192,15 +193,13 @@ async function fetchStockPrices() {
           ts:       Date.now()
         };
       }
-      await delay(200);
+      await new Promise(r => setTimeout(r, 200));
     } catch (e) {}
   }
   save();
   updateDashboard();
   if (document.querySelector('.nav-btn[data-tab="market"].active')) renderMarketList();
 }
-
-const delay = ms => new Promise(r => setTimeout(r, ms));
 
 // ---------- DASHBOARD ----------
 
@@ -215,8 +214,8 @@ function updateDashboard() {
   const pnlPct = invested > 0 ? (pnl / invested) * 100 : 0;
   const avail  = Math.max(0, STATE.settings.initialCapital - invested);
 
-  $('total-value').textContent    = fmtUSD(current || STATE.settings.initialCapital);
-  $('invested-amount').textContent = fmtUSD(invested);
+  $('total-value').textContent      = fmtUSD(current || STATE.settings.initialCapital);
+  $('invested-amount').textContent  = fmtUSD(invested);
   $('available-amount').textContent = fmtUSD(avail);
 
   const pnlEl = $('total-pnl');
@@ -233,14 +232,14 @@ function renderTopMovers() {
     .sort((a, b) => Math.abs(b[1].change24h) - Math.abs(a[1].change24h))
     .slice(0, 5);
 
-  if (!entries.length) { el.innerHTML = '<p class="empty-state">Cargando mercado…</p>'; return; }
+  if (!entries.length) { el.innerHTML = '<p class="empty-state">Cargando mercado...</p>'; return; }
 
   el.innerHTML = entries.map(([sym, d]) => `
     <div class="mover-item">
       <span style="font-weight:600">${sym}</span>
       <span>${fmtUSD(d.price)}</span>
       <span class="price-change ${d.change24h >= 0 ? 'positive' : 'negative'}">
-        ${d.change24h >= 0 ? '▲' : '▼'} ${Math.abs(d.change24h).toFixed(2)}%
+        ${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(2)}%
       </span>
     </div>`).join('');
 }
@@ -255,7 +254,7 @@ function renderMarketList() {
   let html = '';
 
   if (filter === 'stocks' && !STATE.settings.finnhubApiKey) {
-    html += `<div class="card warning-card">⚠️ Para ver precios de acciones en tiempo real, agrega tu API key gratuita de <strong>Finnhub.io</strong> en la pestaña 🤖 IA.</div>`;
+    html += `<div class="card warning-card">Para precios de acciones en tiempo real agrega tu API key gratuita de <strong>Finnhub.io</strong> en la pestana IA.</div>`;
   }
 
   html += list.map(item => {
@@ -268,12 +267,12 @@ function renderMarketList() {
           <div class="asset-symbol">${item.symbol}</div>
         </div>
         <div class="asset-price">
-          <div class="price-value">${d ? fmtUSD(d.price) : '—'}</div>
+          <div class="price-value">${d ? fmtUSD(d.price) : '--'}</div>
           <div class="price-change ${d && d.change24h >= 0 ? 'positive' : 'negative'}">
-            ${d && d.change24h != null ? `${d.change24h >= 0 ? '▲' : '▼'} ${Math.abs(d.change24h).toFixed(2)}%` : '—'}
+            ${d && d.change24h != null ? `${d.change24h >= 0 ? '+' : ''}${d.change24h.toFixed(2)}%` : '--'}
           </div>
         </div>
-        <button class="ai-btn" onclick="quickAI('${item.symbol}','${item.name}')">🤖 IA</button>
+        <button class="ai-btn" onclick="quickAI('${item.symbol}','${item.name}')">IA</button>
       </div>`;
   }).join('');
 
@@ -297,14 +296,14 @@ function savePosition() {
   updateDashboard();
   renderPositions();
   closeModal('modal-position');
-  toast(`✓ Posición ${symbol} agregada`);
+  toast('Posicion ' + symbol + ' agregada');
   ['pos-symbol', 'pos-amount', 'pos-buy-price'].forEach(id => $(id).value = '');
 }
 
 function renderPositions() {
   const el = $('positions-list');
   if (!STATE.portfolio.length) {
-    el.innerHTML = '<p class="empty-state">💼 No tienes inversiones aún. ¡Agrega tu primera posición!</p>';
+    el.innerHTML = '<p class="empty-state">No tienes inversiones aun. Agrega tu primera posicion!</p>';
     return;
   }
   el.innerHTML = STATE.portfolio.map(pos => {
@@ -316,8 +315,8 @@ function renderPositions() {
     return `
       <div class="position-item">
         <div class="position-header">
-          <div><span class="position-symbol">${pos.symbol}</span><span class="position-type">${pos.type === 'crypto' ? 'CRIPTO' : 'ACCIÓN'}</span></div>
-          <button class="alert-delete" onclick="removePosition(${pos.id})">🗑</button>
+          <div><span class="position-symbol">${pos.symbol}</span><span class="position-type">${pos.type === 'crypto' ? 'CRIPTO' : 'ACCION'}</span></div>
+          <button class="alert-delete" onclick="removePosition(${pos.id})">X</button>
         </div>
         <div class="position-details">
           <div><div class="position-detail-label">Cantidad</div><div class="position-detail-value">${pos.amount}</div></div>
@@ -328,15 +327,15 @@ function renderPositions() {
           <div><div class="position-detail-label">P&L</div><div class="position-detail-value" style="color:${pnl>=0?'var(--success)':'var(--danger)'}">${pnl>=0?'+':''}${fmtUSD(pnl)} (${pnlPct.toFixed(1)}%)</div></div>
         </div>
         <div style="display:flex;gap:8px;margin-top:10px">
-          <button class="btn-small" onclick="quickAI('${pos.symbol}','${pos.symbol}')">🤖 Analizar</button>
-          <button class="btn-small" onclick="recordSell(${pos.id},${curPrice})">💰 Registrar Venta</button>
+          <button class="btn-small" onclick="quickAI('${pos.symbol}','${pos.symbol}')">Analizar IA</button>
+          <button class="btn-small" onclick="recordSell(${pos.id},${curPrice})">Registrar Venta</button>
         </div>
       </div>`;
   }).join('');
 }
 
 function removePosition(id) {
-  if (!confirm('¿Eliminar esta posición?')) return;
+  if (!confirm('Eliminar esta posicion?')) return;
   STATE.portfolio = STATE.portfolio.filter(p => p.id !== id);
   save(); updateDashboard(); renderPositions();
 }
@@ -347,7 +346,7 @@ function recordSell(id, price) {
   addDecision('VENTA', pos.symbol, pos.amount, price);
   STATE.portfolio = STATE.portfolio.filter(p => p.id !== id);
   save(); updateDashboard(); renderPositions();
-  toast(`✓ Venta de ${pos.symbol} registrada`);
+  toast('Venta de ' + pos.symbol + ' registrada');
 }
 
 // ---------- ALERTS ----------
@@ -360,21 +359,21 @@ function saveAlert() {
   if (!symbol || !targetPrice) { toast('Completa todos los campos'); return; }
   STATE.alerts.push({ id: Date.now(), type, symbol, condition, targetPrice, active: true });
   save(); renderAlerts(); closeModal('modal-alert');
-  toast(`✓ Alerta ${symbol} activada`);
+  toast('Alerta ' + symbol + ' activada');
   ['alert-symbol', 'alert-price'].forEach(id => $(id).value = '');
 }
 
 function renderAlerts() {
   const el = $('alerts-list');
-  if (!STATE.alerts.length) { el.innerHTML = '<p class="empty-state">🔔 No tienes alertas configuradas.</p>'; return; }
+  if (!STATE.alerts.length) { el.innerHTML = '<p class="empty-state">No tienes alertas configuradas.</p>'; return; }
   el.innerHTML = STATE.alerts.map(a => `
     <div class="alert-item">
       <div class="alert-info">
         <div class="alert-symbol">${a.symbol}</div>
-        <div class="alert-condition">${a.condition === 'above' ? '↑ Sube a' : '↓ Baja a'} ${fmtUSD(a.targetPrice)}</div>
+        <div class="alert-condition">${a.condition === 'above' ? 'Sube a' : 'Baja a'} ${fmtUSD(a.targetPrice)}</div>
       </div>
       <span class="alert-status">${a.active ? 'ACTIVA' : 'DISPARADA'}</span>
-      <button class="alert-delete" onclick="removeAlert(${a.id})">✕</button>
+      <button class="alert-delete" onclick="removeAlert(${a.id})">X</button>
     </div>`).join('');
 }
 
@@ -391,9 +390,9 @@ function checkAlerts() {
     if (!pr) return;
     const hit = a.condition === 'above' ? pr >= a.targetPrice : pr <= a.targetPrice;
     if (hit) {
-      const msg = `${a.symbol} ${a.condition === 'above' ? 'subió a' : 'bajó a'} ${fmtUSD(pr)}`;
-      notify('🚨 Alerta InvestAI', msg);
-      toast(`🚨 ${msg}`);
+      const msg = a.symbol + (a.condition === 'above' ? ' subio a ' : ' bajo a ') + fmtUSD(pr);
+      notify('Alerta InvestAI', msg);
+      toast('ALERTA: ' + msg);
       a.active = false;
       changed = true;
     }
@@ -407,8 +406,8 @@ async function requestNotifPermission() {
   if (!('Notification' in window)) { toast('Tu navegador no soporta notificaciones'); return; }
   const perm = await Notification.requestPermission();
   if (perm === 'granted') {
-    toast('✓ Notificaciones activadas');
-    notify('InvestAI', '¡Notificaciones activadas! Te avisaré cuando tus alertas se disparen.');
+    toast('Notificaciones activadas');
+    notify('InvestAI', 'Notificaciones activadas! Te avisare cuando tus alertas se disparen.');
   } else {
     toast('Notificaciones denegadas');
   }
@@ -424,11 +423,11 @@ function notify(title, body) {
 
 async function getFullAnalysis() {
   const key = STATE.settings.claudeApiKey;
-  if (!key) { toast('Configura tu Claude API Key en la pestaña IA'); return; }
+  if (!key) { toast('Configura tu Claude API Key en la pestana IA'); return; }
 
   const out = $('ai-analysis-output');
   out.className = 'ai-output loading';
-  out.textContent = 'Analizando mercado y portafolio…';
+  out.textContent = 'Analizando mercado y portafolio...';
 
   const mkt = Object.entries(STATE.prices).slice(0, 12)
     .map(([s, d]) => `${s}: ${fmtUSD(d.price)} (${d.change24h?.toFixed(2) ?? '?'}% 24h)`).join(', ');
@@ -442,7 +441,7 @@ async function getFullAnalysis() {
     : 'Sin posiciones abiertas';
 
   const hist = STATE.decisions.slice(0, 6)
-    .map(d => `${d.action} ${d.symbol} ${d.amount > 0 ? `x${d.amount} @ ${fmtUSD(d.price)}` : ''}`.trim())
+    .map(d => `${d.action} ${d.symbol}${d.amount > 0 ? ` x${d.amount} @ ${fmtUSD(d.price)}` : ''}`)
     .join('\n') || 'Sin historial';
 
   const prompt = `Eres un asesor financiero conservador para un inversionista latinoamericano principiante.
@@ -462,21 +461,21 @@ Historial reciente:
 ${hist}
 
 Proporciona:
-1. **Resumen del mercado** (2-3 oraciones)
-2. **Recomendaciones** (máx 3, con COMPRAR/VENDER/MANTENER y razón breve)
-3. **Alerta importante** si hay algo urgente
-4. **Riesgo actual**: BAJO / MEDIO / ALTO para perfil conservador
+1. Resumen del mercado (2-3 oraciones)
+2. Recomendaciones (max 3, con COMPRAR/VENDER/MANTENER y razon breve)
+3. Alerta importante si hay algo urgente
+4. Riesgo actual: BAJO / MEDIO / ALTO para perfil conservador
 
-Seá directo y en español. Recuerda que el usuario tiene menos de $500 USD.`;
+Se directo y en espanol. El usuario tiene menos de $500 USD.`;
 
   try {
     const res  = await claudeCall(key, prompt, 1024);
     out.className = 'ai-output';
     out.innerHTML = fmtAI(res);
-    addDecision('ANÁLISIS IA', 'MERCADO', 0, 0);
+    addDecision('ANALISIS IA', 'MERCADO', 0, 0);
   } catch (e) {
     out.className = 'ai-output';
-    out.textContent = `Error: ${e.message}. Verifica tu API key.`;
+    out.textContent = 'Error: ' + e.message + '. Verifica tu API key.';
   }
 }
 
@@ -484,47 +483,40 @@ async function getDailyInsight() {
   const key = STATE.settings.claudeApiKey;
   if (!key) return;
   const el = $('ai-insight');
-  el.textContent = 'Cargando consejo del día…';
+  el.textContent = 'Cargando consejo del dia...';
 
   const top = Object.entries(STATE.prices)
     .sort((a, b) => Math.abs(b[1].change24h ?? 0) - Math.abs(a[1].change24h ?? 0))
     .slice(0, 3).map(([s, d]) => `${s} ${d.change24h?.toFixed(2)}%`).join(', ');
 
-  const prompt = `Eres asesor financiero conservador. Movimientos hoy: ${top || 'sin datos'}.
-Da UN consejo breve (máx 2 oraciones) para inversionista conservador con menos de $500 USD. En español.`;
+  const prompt = 'Eres asesor financiero conservador. Movimientos hoy: ' + (top || 'sin datos') + '.\nDa UN consejo breve (max 2 oraciones) para inversionista conservador con menos de $500 USD. En espanol.';
 
   try {
     el.textContent = await claudeCall(key, prompt, 150);
   } catch (e) {
-    el.textContent = 'No se pudo cargar el consejo del día.';
+    el.textContent = 'No se pudo cargar el consejo del dia.';
   }
 }
 
 window.quickAI = async function(symbol, name) {
   const key = STATE.settings.claudeApiKey;
-  if (!key) { toast('Configura tu Claude API Key en 🤖 IA'); switchTab('ai'); return; }
+  if (!key) { toast('Configura tu Claude API Key en la pestana IA'); switchTab('ai'); return; }
 
   const d = STATE.prices[symbol];
   const info = d ? `Precio: ${fmtUSD(d.price)}, Cambio 24h: ${d.change24h?.toFixed(2)}%` : 'Sin datos de precio';
 
-  toast(`🤖 Analizando ${symbol}…`);
+  toast('Analizando ' + symbol + '...');
 
-  const prompt = `Analiza brevemente ${name} (${symbol}) para un inversionista conservador con <$500 USD.
-${info}
-Da en 3 puntos:
-1. Señal: COMPRAR / MANTENER / VENDER
-2. Razón (1 oración)
-3. Riesgo: BAJO / MEDIO / ALTO
-En español, muy breve.`;
+  const prompt = `Analiza brevemente ${name} (${symbol}) para inversionista conservador con menos de $500 USD.\n${info}\nDa en 3 puntos:\n1. Senal: COMPRAR / MANTENER / VENDER\n2. Razon (1 oracion)\n3. Riesgo: BAJO / MEDIO / ALTO\nEn espanol, muy breve.`;
 
   try {
     const res = await claudeCall(key, prompt, 200);
     switchTab('ai');
     const out = $('ai-analysis-output');
     out.className = 'ai-output';
-    out.innerHTML = `<strong>Análisis rápido: ${symbol}</strong><br><br>${fmtAI(res)}`;
+    out.innerHTML = '<strong>Analisis rapido: ' + symbol + '</strong><br><br>' + fmtAI(res);
   } catch (e) {
-    toast('Error al obtener análisis');
+    toast('Error al obtener analisis');
   }
 };
 
@@ -558,8 +550,8 @@ function addDecision(action, symbol, amount, price) {
 
 function renderDecisionsHistory() {
   const el = $('decisions-history');
-  if (!STATE.decisions.length) { el.innerHTML = '<p class="empty-state">Aún no hay decisiones registradas.</p>'; return; }
-  const map = { 'COMPRA': 'buy', 'VENTA': 'sell', 'ANÁLISIS IA': 'hold' };
+  if (!STATE.decisions.length) { el.innerHTML = '<p class="empty-state">Aun no hay decisiones registradas.</p>'; return; }
+  const map = { 'COMPRA': 'buy', 'VENTA': 'sell', 'ANALISIS IA': 'hold' };
   el.innerHTML = STATE.decisions.slice(0, 20).map(d => `
     <div class="decision-item">
       <div style="display:flex;justify-content:space-between;align-items:center">
@@ -573,16 +565,16 @@ function renderDecisionsHistory() {
 // ---------- SETTINGS ----------
 
 function loadApiUI() {
-  $('claude-api-key').value  = STATE.settings.claudeApiKey  ? '•'.repeat(16) : '';
-  $('finnhub-api-key').value = STATE.settings.finnhubApiKey ? '•'.repeat(16) : '';
+  $('claude-api-key').value  = STATE.settings.claudeApiKey  ? '****' : '';
+  $('finnhub-api-key').value = STATE.settings.finnhubApiKey ? '****' : '';
 }
 
 function saveApiKeys() {
   const ck = $('claude-api-key').value;
   const fk = $('finnhub-api-key').value;
-  if (ck && !ck.includes('•')) STATE.settings.claudeApiKey  = ck.trim();
-  if (fk && !fk.includes('•')) STATE.settings.finnhubApiKey = fk.trim();
-  save(); toast('✓ Claves guardadas');
+  if (ck && !ck.includes('*')) STATE.settings.claudeApiKey  = ck.trim();
+  if (fk && !fk.includes('*')) STATE.settings.finnhubApiKey = fk.trim();
+  save(); toast('Claves guardadas');
   if (STATE.settings.claudeApiKey)  getDailyInsight();
   if (STATE.settings.finnhubApiKey) fetchStockPrices();
 }
@@ -594,18 +586,18 @@ function loadSettingsUI() {
 }
 
 function saveSettings() {
-  STATE.settings.initialCapital   = parseFloat($('initial-capital').value) || 500;
-  STATE.settings.riskProfile      = $('risk-profile').value;
-  STATE.settings.refreshInterval  = parseInt($('refresh-interval').value);
-  save(); applyRiskProfile(); closeModal('modal-settings'); toast('✓ Configuración guardada');
+  STATE.settings.initialCapital  = parseFloat($('initial-capital').value) || 500;
+  STATE.settings.riskProfile     = $('risk-profile').value;
+  STATE.settings.refreshInterval = parseInt($('refresh-interval').value);
+  save(); applyRiskProfile(); closeModal('modal-settings'); toast('Configuracion guardada');
   startAutoRefresh();
 }
 
 function applyRiskProfile() {
   const map = {
-    conservative: { w: '20%', desc: 'Perfil: Conservador — Prioriza preservar capital' },
-    moderate:     { w: '55%', desc: 'Perfil: Moderado — Balance riesgo/ganancia' },
-    aggressive:   { w: '90%', desc: 'Perfil: Agresivo — Busca máximas ganancias' }
+    conservative: { w: '20%', desc: 'Perfil: Conservador - Prioriza preservar capital' },
+    moderate:     { w: '55%', desc: 'Perfil: Moderado - Balance riesgo/ganancia' },
+    aggressive:   { w: '90%', desc: 'Perfil: Agresivo - Busca maximas ganancias' }
   };
   const r = map[STATE.settings.riskProfile] || map.conservative;
   $('risk-fill').style.width = r.w;
@@ -615,12 +607,12 @@ function applyRiskProfile() {
 function exportData() {
   const d = { ...STATE, settings: { ...STATE.settings, claudeApiKey: '***', finnhubApiKey: '***' }, exportDate: new Date().toISOString() };
   const blob = new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' });
-  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `investai-${Date.now()}.json` });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'investai-' + Date.now() + '.json' });
   a.click(); URL.revokeObjectURL(a.href);
 }
 
 function clearData() {
-  if (!confirm('¿Eliminar TODOS los datos? Esta acción no se puede deshacer.')) return;
+  if (!confirm('Eliminar TODOS los datos? Esta accion no se puede deshacer.')) return;
   localStorage.removeItem('investai_v1');
   location.reload();
 }
