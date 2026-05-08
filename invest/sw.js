@@ -1,4 +1,4 @@
-const CACHE = 'investai-v1';
+const CACHE = 'investai-v3';
 const ASSETS = [
   '/invest/index.html',
   '/invest/styles.css',
@@ -16,9 +16,8 @@ self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
       Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', e => {
@@ -28,14 +27,21 @@ self.addEventListener('fetch', e => {
       url.includes('finnhub.io')) {
     return;
   }
+  // Network-first for app shell so updates apply on reload
+  if (url.includes('/invest/')) {
+    e.respondWith(
+      fetch(e.request).then(res => {
+        if (res.status === 200) {
+          const clone = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
+        }
+        return res;
+      }).catch(() => caches.match(e.request))
+    );
+    return;
+  }
   e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request).then(res => {
-      if (res.status === 200) {
-        const clone = res.clone();
-        caches.open(CACHE).then(c => c.put(e.request, clone));
-      }
-      return res;
-    }))
+    caches.match(e.request).then(r => r || fetch(e.request))
   );
 });
 
@@ -43,7 +49,7 @@ self.addEventListener('push', e => {
   const data = e.data?.json() || {};
   e.waitUntil(
     self.registration.showNotification(data.title || 'InvestAI', {
-      body: data.body || 'Alerta de inversión',
+      body: data.body || 'Alerta de inversion',
       icon: '/invest/icon.svg',
       badge: '/invest/icon.svg',
       vibrate: [200, 100, 200]
